@@ -2,7 +2,7 @@
 
 Generative chemistry pipeline for triterpenoid saponins using [REINVENT4](https://github.com/MolecularAI/REINVENT4).
 
-Train a REINVENT4 model on saponin SMILES, sample novel triterpenoids, and optionally guide generation with custom scoring functions (e.g., predicted potency, physicochemical properties).
+Train a REINVENT4 model on saponin SMILES, sample novel triterpenoids, and optionally guide generation with custom scoring functions (e.g., synthetic accessibility, physicochemical properties).
 
 ## Quick Start
 
@@ -45,16 +45,15 @@ saponin-generator/
 | | `configs/tl/tl_3k_reg.toml` | Small-scale regularised (3k, 2 epochs) |
 | | `configs/tl/tl_46k.toml` | Full NLL baseline (46k, 1 epoch) |
 | | `configs/tl/tl_46k_probe.toml` | Quick data quality check |
-| | `configs/tl/tl_46k_reg.toml` | **Main result** — 4 epochs x 4 blocks, regularised |
-| | `configs/tl/tl_46k_block{1-4}.toml` | Incremental block training (4 chained blocks) |
+| | `configs/tl/tl_46k_reg.toml` | **Main result** — 4 epochs, regularised (46k) |
 | **Sampling** | `configs/sampling/sampling_tl_epoch3.toml` | Sample from epoch 3 prior |
 | | `configs/sampling/sampling_tl_epoch4.toml` | Sample from epoch 4 prior (final) |
 | | `configs/sampling/sampling_tl_3k.toml` | Sample from 3k demo prior |
-| | `configs/sampling/sampling_rl_ic50.toml` | Sample from IC50-optimised RL agent |
+| | `configs/sampling/sampling_rl_epoch1.toml` | Sample from RL-optimised agent |
 | | `configs/sampling/sampling_rl_light.toml` | Sample from light saponin RL agent |
-| **RL (DAP)** | `configs/rl/rl_ic50_epoch1.toml` | IC50 optimisation from epoch 1 |
-| | `configs/rl/rl_ic50_epoch4.toml` | IC50 optimisation from epoch 4 |
-| | `configs/rl/rl_light_saponins.toml` | Multi-objective: IC50 + MW + TPSA + Rings + Fsp3 |
+| **RL (DAP)** | `configs/rl/rl_epoch1.toml` | Single-objective optimisation (SAScore) |
+| | `configs/rl/rl_epoch4.toml` | Single-objective optimisation (SAScore) |
+| | `configs/rl/rl_light_saponins.toml` | Multi-objective: MW + TPSA + Rings + Fsp3 |
 
 ## Pre-trained Priors
 
@@ -77,8 +76,6 @@ The pipeline supports pluggable scoring via REINVENT4's `ExternalProcess`:
 ## Data
 
 The `data/` directory contains triterpenoid saponin SMILES compiled from published literature. Datasets range from 3k to 46k SMILES.
-
-Block files (`_block{1-4}.smi`) partition the 46k dataset into equal quarters for incremental training.
 
 ## License
 

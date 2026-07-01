@@ -3,7 +3,7 @@ tb_logdir = "tb_TL_saponin_46k_reg"
 json_out_config = "transfer_learning_saponin_46k_reg.json"
 
 [parameters]
-num_epochs = 1
+num_epochs = 4
 save_every_n_epochs = 1
 batch_size = 16
 
@@ -13,7 +13,7 @@ sample_batch_size = 128
 
 input_model_file = "../priors/reinvent_pubchem.prior"
 smiles_file = "../data/saponin_train_46k_valid.smi"
-output_model_file = "../priors/saponin_prior_46k_reg.prior"
+output_model_file = "prior_trained.prior"
 
 [parameters.pairs]
 type = "tanimoto"

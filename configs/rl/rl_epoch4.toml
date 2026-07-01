@@ -1,0 +1,45 @@
+run_type = "staged_learning"
+device = "cpu"
+tb_logdir = "tb_RL_epoch4"
+json_out_config = "rl_epoch4.json"
+
+[parameters]
+prior_file = "../../priors/saponin_prior_46k_reg_epoch4.prior"
+agent_file = "../../priors/saponin_prior_46k_reg_epoch4.prior"
+summary_csv_prefix = "rl_epoch4"
+use_checkpoint = false
+purge_memories = false
+smiles_file = ""
+sample_strategy = "multinomial"
+distance_threshold = 100
+batch_size = 64
+randomize_smiles = true
+isomeric_smiles = false
+temperature = 1.0
+
+[learning_strategy]
+type = "dap"
+sigma = 128
+rate = 0.0001
+
+[[stage]]
+max_steps = 500
+max_score = 0.85
+chkpt_file = "../../priors/rl_epoch4.chkpt"
+termination = "simple"
+min_steps = 50
+
+# Example: scoring with SAScore (built into REINVENT4)
+# Replace with your own ExternalProcess scorer for custom objectives
+[stage.scoring]
+type = "geometric_mean"
+
+[[stage.scoring.component]]
+[stage.scoring.component.SAScore]
+[[stage.scoring.component.SAScore.endpoint]]
+name = "SAScore"
+weight = 1.0
+transform.type = "reverse_sigmoid"
+transform.high = 5.0
+transform.low = 2.0
+transform.k = 0.5
