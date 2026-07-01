@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated artifacts
+output/
+samples/
+*.csv
+*.xlsx
+*.png
+*.log
+
+# TensorBoard
+tensorboard/
+
+# Zone identifiers (Windows filesystem)
+*:Zone.Identifier
+
+# OS
+.DS_Store
+Thumbs.db
+
+# REINVENT4
+*.chkpt

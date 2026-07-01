@@ -1,0 +1,15 @@
+run_type = "transfer_learning"
+tb_logdir = "tb_TL_saponin_46k_pure"
+json_out_config = "transfer_learning_saponin_46k_pureTL.json"
+
+[parameters]
+# --- 訓練循環參數 ---
+num_epochs = 2
+save_every_n_epochs = 2
+batch_size = 8
+num_refs = 0
+
+# --- 模型與資料 ---
+input_model_file = "../priors/reinvent_pubchem.prior"
+smiles_file = "../data/saponin_train_46k.smi"
+output_model_file = "../priors/saponin_prior_46k_pureTL.prior"

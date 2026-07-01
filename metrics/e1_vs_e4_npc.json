@@ -1,0 +1,66 @@
+{
+  "E1 RL Agent": {
+    "superclass": [
+      [
+        "Triterpenoids",
+        98.0
+      ],
+      [
+        "Diterpenoids",
+        2.0
+      ]
+    ],
+    "class": [
+      [
+        "Lanostane, Tirucallane and Euphane triterpenoids",
+        96.9
+      ],
+      [
+        "Labdane diterpenoids",
+        1.0
+      ],
+      [
+        "Dammarane and Protostane triterpenoids",
+        1.0
+      ],
+      [
+        "Cycloartane triterpenoids",
+        1.0
+      ]
+    ],
+    "pathway": [
+      [
+        "Terpenoids",
+        100.0
+      ]
+    ]
+  },
+  "E4 RL Agent": {
+    "superclass": [
+      [
+        "Triterpenoids",
+        100.0
+      ]
+    ],
+    "class": [
+      [
+        "Lanostane, Tirucallane and Euphane triterpenoids",
+        79.8
+      ],
+      [
+        "Dammarane and Protostane triterpenoids",
+        15.1
+      ],
+      [
+        "Cycloartane triterpenoids",
+        5.0
+      ]
+    ],
+    "pathway": [
+      [
+        "Terpenoids",
+        100.0
+      ]
+    ]
+  }
+}

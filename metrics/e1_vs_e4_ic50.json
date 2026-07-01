@@ -1,0 +1,42 @@
+{
+  "E1 TL Prior": {
+    "n_valid": 8595,
+    "validity": 0.8595,
+    "n_unique": 8595,
+    "ic50_mean": 13.8,
+    "ic50_median": 13.14,
+    "ic50_min": 2.76,
+    "pct_lt_2uM": 0.0,
+    "pct_lt_5uM": 1.1
+  },
+  "E4 TL Prior": {
+    "n_valid": 8618,
+    "validity": 0.8618,
+    "n_unique": 8618,
+    "ic50_mean": 13.84,
+    "ic50_median": 13.08,
+    "ic50_min": 2.33,
+    "pct_lt_2uM": 0.0,
+    "pct_lt_5uM": 1.5
+  },
+  "E1 RL Agent": {
+    "n_valid": 4973,
+    "validity": 0.4973,
+    "n_unique": 4973,
+    "ic50_mean": 1.87,
+    "ic50_median": 1.72,
+    "ic50_min": 0.86,
+    "pct_lt_2uM": 81.6,
+    "pct_lt_5uM": 99.0
+  },
+  "E4 RL Agent": {
+    "n_valid": 3722,
+    "validity": 0.3722,
+    "n_unique": 3722,
+    "ic50_mean": 1.65,
+    "ic50_median": 1.55,
+    "ic50_min": 0.9,
+    "pct_lt_2uM": 83.6,
+    "pct_lt_5uM": 99.9
+  }
+}

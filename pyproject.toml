@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=64.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "saponin-generator"
+version = "0.1.0"
+description = "Generative chemistry pipeline for triterpenoid saponins using REINVENT4"
+authors = [
+    {name = "Hugo Wong", email = "hugowongcl@gmail.com"},
+]
+license = {text = "Apache-2.0"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "rdkit>=2023.03",
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black",
+    "ruff",
+]
+fcd = [
+    "fcd>=1.0",
+]
+npc = [
+    "requests>=2.28",
+]

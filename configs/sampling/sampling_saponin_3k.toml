@@ -1,0 +1,11 @@
+run_type = "sampling"
+device = "cpu"
+json_out_config = "_sampling_saponin_3k.json"
+
+[parameters]
+model_file = "../../priors/saponin_prior_3k.prior"
+output_file = "sampling_saponin_3k.csv"
+num_smiles = 200
+unique_molecules = true
+randomize_smiles = true
+sample_strategy = "beamsearch"

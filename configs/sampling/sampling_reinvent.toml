@@ -1,0 +1,11 @@
+run_type = "sampling"
+device = "cpu"
+json_out_config = "_sampling_reinvent.json"
+
+[parameters]
+model_file = "../../priors/reinvent_pubchem.prior"
+output_file = "sampling_reinvent.csv"
+num_smiles = 100
+unique_molecules = true
+randomize_smiles = true
+sample_strategy = "beamsearch"

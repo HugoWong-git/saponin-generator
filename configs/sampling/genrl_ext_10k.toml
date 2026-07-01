@@ -1,0 +1,9 @@
+run_type = "sampling"
+[parameters]
+model_file = "../../priors/saponin_ic50_generic_extended.chkpt"
+num_smiles = 10000
+output_file = "../../samples/ic50_genrl_ext_10k.csv"
+unique_molecules = true
+randomize_smiles = true
+temperature = 1.0
+isomeric_smiles = false

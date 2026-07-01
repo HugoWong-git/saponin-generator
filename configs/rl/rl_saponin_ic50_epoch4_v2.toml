@@ -1,0 +1,82 @@
+run_type = "staged_learning"
+device = "cpu"
+tb_logdir = "tb_RL_ic50_epoch4_v2"
+json_out_config = "rl_saponin_ic50_epoch4_v2.json"
+
+[parameters]
+prior_file = "../../priors/saponin_prior_46k_reg_epoch4.prior"
+agent_file = "../../priors/saponin_prior_46k_reg_epoch4.prior"
+summary_csv_prefix = "rl_saponin_ic50_epoch4_v2"
+use_checkpoint = false
+purge_memories = false
+smiles_file = ""
+sample_strategy = "multinomial"
+distance_threshold = 100
+batch_size = 64
+randomize_smiles = true
+isomeric_smiles = false
+temperature = 1.0
+
+[learning_strategy]
+type = "dap"
+sigma = 128
+rate = 0.0001
+
+[diversity_filter]
+type = "IdenticalMurckoScaffold"
+bucket_size = 25
+minscore = 0.3
+
+[[stage]]
+max_steps = 500
+max_score = 0.85
+chkpt_file = "../../priors/saponin_ic50_rl_epoch4_v2.chkpt"
+termination = "simple"
+min_steps = 50
+
+[stage.scoring]
+type = "geometric_mean"
+
+# ── Component 1: IC50 potency (primary, weight 1.0) ──
+[[stage.scoring.component]]
+[stage.scoring.component.external_process]
+[[stage.scoring.component.external_process.endpoint]]
+name = "Predicted IC50"
+weight = 1.0
+params.executable = "python"
+params.args = "../../scripts/ic50_scorer.py"
+params.property = "predictions"
+# Tighter reverse sigmoid:
+#   ln(IC50) = -2.3 → IC50 ~0.1 µM → score ~0.95
+#   ln(IC50) =  0.0 → IC50 ~1 µM   → score ~0.5
+#   ln(IC50) =  2.3 → IC50 ~10 µM  → score ~0.05
+[stage.scoring.component.external_process.endpoint.transform]
+type = "reverse_sigmoid"
+high = 2.0
+low = -2.0
+k = 0.5
+
+# ── Component 2: MW constraint (keep saponin-like, weight 0.3) ──
+[[stage.scoring.component]]
+[stage.scoring.component.MolecularWeight]
+[[stage.scoring.component.MolecularWeight.endpoint]]
+name = "MW"
+weight = 0.3
+transform.type = "double_sigmoid"
+transform.low = 350.0
+transform.high = 850.0
+transform.coef_div = 500.0
+transform.coef_si = 100.0
+transform.coef_se = 100.0
+
+# ── Component 3: Synthetic Accessibility (weight 0.3) ──
+[[stage.scoring.component]]
+[stage.scoring.component.SAScore]
+[[stage.scoring.component.SAScore.endpoint]]
+name = "SA"
+weight = 0.3
+# SA score: 1=easy → score ~1, 5=hard → score ~0
+transform.type = "reverse_sigmoid"
+transform.high = 5.0
+transform.low = 2.0
+transform.k = 0.5

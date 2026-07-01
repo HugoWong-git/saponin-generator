@@ -1,0 +1,21 @@
+run_type = "transfer_learning"
+device = "cpu"
+tb_logdir = "tb_TL_saponin_46k"
+json_out_config = "_tl_saponin_46k.json"
+
+[parameters]
+num_epochs = 2                 # 先觀察 2 個 epoch，再決定要不要拉長
+save_every_n_epochs = 2
+batch_size = 32
+num_refs = 16
+sample_batch_size = 128
+
+input_model_file = "../priors/reinvent_pubchem.prior"
+smiles_file = "../data/saponin_train_46k.smi"
+output_model_file = "../priors/saponin_prior_46k.prior"
+
+pairs.type = "tanimoto"
+pairs.upper_threshold = 0.9
+pairs.lower_threshold = 0.7
+pairs.min_cardinality = 1
+pairs.max_cardinality = 199

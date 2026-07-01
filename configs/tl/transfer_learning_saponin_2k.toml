@@ -1,0 +1,21 @@
+run_type = "transfer_learning"
+device = "cpu"                 # 若有 GPU 再改成 "cuda:0"
+tb_logdir = "tb_TL_saponin_2k"
+json_out_config = "_tl_saponin_2k.json"
+
+[parameters]
+num_epochs = 5                 # dry run：先跑 5 個 epoch 試水溫
+save_every_n_epochs = 5
+batch_size = 32
+num_refs = 16
+sample_batch_size = 128
+
+input_model_file = "../priors/reinvent_pubchem.prior"
+smiles_file = "../data/saponin_train_2k.smi"
+output_model_file = "../priors/saponin_prior_2k.prior"
+
+pairs.type = "tanimoto"
+pairs.upper_threshold = 0.9
+pairs.lower_threshold = 0.7
+pairs.min_cardinality = 1
+pairs.max_cardinality = 199
