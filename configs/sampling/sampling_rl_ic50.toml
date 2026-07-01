@@ -1,0 +1,15 @@
+run_type = "sampling"
+device = "cpu"
+tb_logdir = "tb_sampling_rl_ic50"
+json_out_config = "sampling_rl_ic50.json"
+
+[parameters]
+model_file = "../../priors/saponin_prior_46k_reg_epoch4.prior"
+output_file = "../../samples/rl_ic50_samples.csv"
+sample_strategy = "multinomial"
+batch_size = 128
+num_smiles = 10000
+unique_molecules = true
+randomize_smiles = true
+isomeric_smiles = false
+temperature = 1.0
