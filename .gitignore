@@ -37,4 +37,4 @@ tensorboard/
 Thumbs.db
 
 # REINVENT4
-*.chkpt
+*.chkptsmoke_test/checkpoints/

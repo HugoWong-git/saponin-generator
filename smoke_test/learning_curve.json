@@ -1,35 +1,28 @@
 {
   "args": {
-    "iterations": 2,
-    "episodes": 8,
-    "sims": 15,
+    "iterations": 15,
+    "episodes": 80,
+    "sims": 25,
     "eval_budget": 40,
-    "eval_per_n": 20,
+    "eval_per_n": 60,
     "seed": 7,
     "window": 4
   },
-  "wall_clock_s": 10.473596096038818,
+  "wall_clock_s": 73.07475996017456,
   "curve": [
     {
       "iteration": 0,
       "loss": null,
       "selfplay_solve_rate": null,
-      "10": 0.0,
-      "12": 0.0
+      "10": 0.7,
+      "12": 0.55
     },
     {
       "iteration": 1,
-      "loss": 3.2450408935546875,
-      "selfplay_solve_rate": 0.125,
-      "10": 0.0,
-      "12": 0.0
-    },
-    {
-      "iteration": 2,
-      "loss": 3.449570655822754,
-      "selfplay_solve_rate": 0.5,
-      "10": 0.0,
-      "12": 0.0
+      "loss": 2.613320827484131,
+      "selfplay_solve_rate": 0.775,
+      "10": 0.7166666666666667,
+      "12": 0.6166666666666667
     }
   ]
 }

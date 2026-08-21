@@ -88,15 +88,51 @@ def solve(mv: tuple[str, ...], cap: int = 400_000) -> BruteForceResult:
     return explore(mv, cap=cap, collect=False)[0]
 
 
-if __name__ == "__main__":
+def main() -> None:
     import argparse
     import itertools
+    import json
+    import os
+    import statistics
     import time
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--n", type=int, default=6, help="strip length")
     parser.add_argument("--all", action="store_true", help="enumerate every M/V pattern")
+    parser.add_argument(
+        "--test-sets", action="store_true", help="run the oracle over every test instance"
+    )
+    parser.add_argument(
+        "--out", default=os.path.join(os.path.dirname(__file__), "oracle.json")
+    )
     args = parser.parse_args()
+
+    if args.test_sets:
+        from .instances import N_VALUES, instances
+
+        summary = []
+        t0 = time.time()
+        for n in N_VALUES:
+            test = instances(n)[1]
+            results = [solve(mv) for mv in test]
+            assert all(r.complete for r in results), "state cap hit; raise --cap"
+            solvable = [r for r in results if r.solvable]
+            summary.append(
+                {
+                    "n": n,
+                    "n_instances": len(test),
+                    "solvable": len(solvable),
+                    "solvable_fraction": len(solvable) / len(test),
+                    "min_folds_values": sorted({r.min_folds for r in solvable}),
+                    "mean_reachable_states": statistics.mean(r.n_states for r in results),
+                    "max_reachable_states": max(r.n_states for r in results),
+                }
+            )
+            print(summary[-1])
+        with open(args.out, "w") as fh:
+            json.dump({"wall_clock_s": time.time() - t0, "per_n": summary}, fh, indent=2)
+        print(f"{time.time() - t0:.0f}s -> {args.out}")
+        return
 
     patterns = (
         list(itertools.product("MV", repeat=args.n - 1))
@@ -109,3 +145,7 @@ if __name__ == "__main__":
         f"n={args.n}  patterns={len(patterns)}  solvable={solvable} "
         f"({solvable / len(patterns):.3f})  {time.time() - t0:.1f}s"
     )
+
+
+if __name__ == "__main__":
+    main()

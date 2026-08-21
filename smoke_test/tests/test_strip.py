@@ -11,6 +11,7 @@ import itertools
 import pytest
 
 from smoke_test.brute_force import explore, solve
+from smoke_test.instances import instances
 from smoke_test.strip import (
     MOUNTAIN,
     SIDE_LEFT,
@@ -177,6 +178,55 @@ def test_solved_states_have_every_crease_folded_and_one_cell():
                 assert state.n_folded == state.n - 1
                 assert len(set(state.pos)) == 1
                 assert len({state.rank_of(s) for s in range(state.n)}) == state.n
+
+
+def test_search_only_ever_visits_genuinely_non_crossing_states():
+    """Everything the search touches must survive the independent geometric checker.
+
+    Guards the seam between the search and the environment: a search that quietly
+    accepted an illegal move would still report solves, and the solve rate would be
+    measuring nothing.
+    """
+    import random
+
+    from smoke_test.sp_mcts import SPMCTS
+
+    rng = random.Random(3)
+    for n in (8, 10):
+        for mv in instances(n)[1][:5]:
+            game = StripGame(mv)
+            mcts = SPMCTS(game, rng=random.Random(11))
+            mcts.run(game.getInitBoard(), 60)
+            assert mcts.expansions > 0
+            # replay every legal move from the root a few times over
+            for _ in range(20):
+                state = game.getInitBoard()
+                while True:
+                    actions = legal_actions(state)
+                    if not actions:
+                        break
+                    state = apply_fold(state, *decode(rng.choice(actions)))
+                    assert geometric_no_crossing(state)
+
+
+def test_solutions_found_by_search_are_replayable_and_valid():
+    import random
+
+    from smoke_test.sp_mcts import SPMCTS
+
+    solved_any = False
+    for mv in instances(10)[1][:10]:
+        game = StripGame(mv)
+        mcts = SPMCTS(game, rng=random.Random(5))
+        if not mcts.run(game.getInitBoard(), 400):
+            continue
+        solved_any = True
+        state = game.getInitBoard()
+        for action in mcts.best_path:
+            assert game.getValidMoves(state)[action] == 1
+            state = apply_fold(state, *decode(action))
+            assert state is not None and geometric_no_crossing(state)
+    assert solved_any
 
 
 def test_game_ended_never_returns_the_not_terminal_sentinel_at_a_terminal_state():
