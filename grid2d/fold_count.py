@@ -29,22 +29,41 @@ from smoke_test.sp_mcts import SPMCTS
 EVAL_SEED = 500_003  # must match evaluate.py so the instances are the same held-out set
 
 
-def oracle_solutions(game: GridGame) -> tuple[int | None, int]:
-    """Exhaustive search. Returns (minimum fold count, number of distinct sequences).
+SEQUENCE_CAP = 200_000  # stop counting paths past this; the count becomes a lower bound
+NODE_CAP = 2_000_000
+
+
+def oracle_solutions(game: GridGame) -> tuple[int | None, int, bool]:
+    """Exhaustive search. Returns (minimum fold count, distinct sequences, complete).
 
     Sequences are counted as distinct action paths from the root, so two orders that
     reach the same folded state by different routes count separately -- that is the
     quantity that decides whether the policy had a choice to get wrong.
+
+    Path enumeration is exponential in principle, so both the path count and the node
+    count are capped. If either cap trips, ``complete`` is False and the sequence count
+    is a lower bound; the minimum fold count found is still valid, since minimum depth
+    is reached long before the cap on any instance this size.
     """
     best: list[int | None] = [None]
     total = [0]
+    nodes = [0]
+    capped = [False]
     seen_dead: set[str] = set()
 
     def dfs(state, depth: int) -> None:
+        if capped[0]:
+            return
         if state.is_solved:
             total[0] += 1
             if best[0] is None or depth < best[0]:
                 best[0] = depth
+            if total[0] >= SEQUENCE_CAP:
+                capped[0] = True
+            return
+        nodes[0] += 1
+        if nodes[0] >= NODE_CAP:
+            capped[0] = True
             return
         key = game.stringRepresentation(state)
         if key in seen_dead:
@@ -54,11 +73,11 @@ def oracle_solutions(game: GridGame) -> tuple[int | None, int]:
             nxt = apply_fold(state, *decode(state.m, state.n, action))
             if nxt is not None:
                 dfs(nxt, depth + 1)
-        if total[0] == found_before:
+        if total[0] == found_before and not capped[0]:
             seen_dead.add(key)
 
     dfs(game.getInitBoard(), 0)
-    return best[0], total[0]
+    return best[0], total[0], not capped[0]
 
 
 def policy_sequence(game: GridGame, net, budget: int, rng) -> list[int] | None:
@@ -103,13 +122,14 @@ def main() -> None:
     rows = []
     for i, (hmv, vmv) in enumerate(instances):
         game = GridGame(hmv, vmv)
-        oracle_min, n_sequences = oracle_solutions(game)
+        oracle_min, n_sequences, complete = oracle_solutions(game)
         seq = policy_sequence(game, net, budget, rng)
         rows.append(
             {
                 "instance": i,
                 "oracle_min_folds": oracle_min,
                 "oracle_distinct_sequences": n_sequences,
+                "oracle_count_complete": complete,
                 "policy_solved": seq is not None,
                 "policy_folds": len(seq) if seq else None,
                 "matches_oracle_min": bool(seq) and len(seq) == oracle_min,
@@ -134,6 +154,10 @@ def main() -> None:
         "min_distinct_sequences": min(
             (r["oracle_distinct_sequences"] for r in rows), default=0
         ),
+        "instances_where_sequence_count_hit_cap": sum(
+            1 for r in rows if not r["oracle_count_complete"]
+        ),
+        "sequence_cap": SEQUENCE_CAP,
         "budget_per_step": budget,
         "seed": args.seed,
         "eval_seed": EVAL_SEED,
