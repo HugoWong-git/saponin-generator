@@ -1,0 +1,49 @@
+{
+  "wall_clock_s": 874.3093793392181,
+  "per_n": [
+    {
+      "n": 6,
+      "n_instances": 32,
+      "solvable": 32,
+      "solvable_fraction": 1.0,
+      "min_folds_values": [
+        5
+      ],
+      "mean_reachable_states": 85,
+      "max_reachable_states": 109
+    },
+    {
+      "n": 8,
+      "n_instances": 128,
+      "solvable": 128,
+      "solvable_fraction": 1.0,
+      "min_folds_values": [
+        7
+      ],
+      "mean_reachable_states": 386.0625,
+      "max_reachable_states": 555
+    },
+    {
+      "n": 10,
+      "n_instances": 200,
+      "solvable": 200,
+      "solvable_fraction": 1.0,
+      "min_folds_values": [
+        9
+      ],
+      "mean_reachable_states": 1780.06,
+      "max_reachable_states": 2751
+    },
+    {
+      "n": 12,
+      "n_instances": 200,
+      "solvable": 200,
+      "solvable_fraction": 1.0,
+      "min_folds_values": [
+        11
+      ],
+      "mean_reachable_states": 7906.43,
+      "max_reachable_states": 15047
+    }
+  ]
+}
