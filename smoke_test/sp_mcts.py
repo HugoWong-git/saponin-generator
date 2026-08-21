@@ -25,7 +25,10 @@ from __future__ import annotations
 import math
 import random
 
-from .strip import StripGame, StripState, apply_fold, decode
+# Generic over the alpha-zero-general Game shape: the only thing this module needs
+# from a domain is getNextState / getValidMoves / getGameEnded / stringRepresentation
+# and a state exposing .is_solved. `smoke_test.strip` and `grid2d.grid` both supply
+# that, so 1-D and 2-D share one search implementation rather than forking it.
 
 C_PUCT = 1.4
 W_MAX = 1.0
@@ -36,7 +39,7 @@ FPU_VALUE = 0.0  # assumed value of an unvisited child; see the note in search()
 class SPMCTS:
     def __init__(
         self,
-        game: StripGame,
+        game,
         net=None,
         c_puct: float = C_PUCT,
         w_max: float = W_MAX,
@@ -69,12 +72,12 @@ class SPMCTS:
 
     # -- helpers ---------------------------------------------------------------------
 
-    def _valid(self, state: StripState, key: str) -> list[int]:
+    def _valid(self, state, key: str) -> list[int]:
         if key not in self.Vs:
             self.Vs[key] = self.game.getValidMoves(state)
         return self.Vs[key]
 
-    def _priors(self, state: StripState, key: str, valid: list[int]) -> list[float]:
+    def _priors(self, state, key: str, valid: list[int]) -> list[float]:
         if key in self.Ps:
             return self.Ps[key]
         if self.net is None:
@@ -90,7 +93,7 @@ class SPMCTS:
         )
         return self.Ps[key]
 
-    def _leaf_value(self, state: StripState) -> float:
+    def _leaf_value(self, state) -> float:
         """Value estimate for a newly expanded leaf.
 
         Both arms roll out, so the expansion budget buys the same thing in each and the
@@ -105,7 +108,7 @@ class SPMCTS:
             return rollout
         return 0.5 * rollout + 0.5 * self.net.predict(state)[1]
 
-    def _rollout(self, state: StripState) -> float:
+    def _rollout(self, state) -> float:
         """Rollout to a terminal state; returns its score.
 
         Actions are drawn uniformly from the legal moves, or from the policy head
@@ -124,11 +127,11 @@ class SPMCTS:
             else:
                 weights = [max(1e-6, self.net.predict(state)[0][a]) for a in choices]
                 action = self.rng.choices(choices, weights=weights)[0]
-            state = apply_fold(state, *decode(action))
+            state = self.game.getNextState(state, 1, action)[0]
 
     # -- search ----------------------------------------------------------------------
 
-    def search(self, state: StripState, path: list[int] | None = None) -> float:
+    def search(self, state, path: list[int] | None = None) -> float:
         path = path or []
         key = self.game.stringRepresentation(state)
 
@@ -170,7 +173,7 @@ class SPMCTS:
                 best_u, best_a = u, a
 
         self.expansions += 1
-        nxt = apply_fold(state, *decode(best_a))
+        nxt = self.game.getNextState(state, 1, best_a)[0]
         value = self.search(nxt, path + [best_a])
 
         sa = (key, best_a)
@@ -181,7 +184,7 @@ class SPMCTS:
         self.Ns[key] += 1
         return value
 
-    def _note_solution(self, state: StripState) -> None:
+    def _note_solution(self, state) -> None:
         if state.is_solved and not self.found_solution:
             self.found_solution = True
             self.expansions_at_solution = self.expansions
@@ -190,7 +193,7 @@ class SPMCTS:
         if score > self.best_score:
             self.best_score, self.best_path = score, list(path)
 
-    def run(self, state: StripState, budget: int) -> bool:
+    def run(self, state, budget: int) -> bool:
         """Search until ``budget`` expansions are spent or a solution is found.
 
         Returns True if a fully-folded state was reached.
@@ -201,7 +204,7 @@ class SPMCTS:
                 return True
         return self.found_solution
 
-    def policy(self, state: StripState, temperature: float = 1.0) -> list[float]:
+    def policy(self, state, temperature: float = 1.0) -> list[float]:
         """Visit-count distribution at ``state``, for self-play training targets."""
         key = self.game.stringRepresentation(state)
         counts = [self.N.get((key, a), 0) for a in range(self.game.getActionSize())]
@@ -220,7 +223,7 @@ class SPMCTS:
         return [a / z for a in adjusted]
 
 
-def random_arm(game: StripGame, state: StripState, budget: int, rng: random.Random):
+def random_arm(game, state, budget: int, rng: random.Random):
     """Baseline: repeated random legal rollouts from the root until budget is spent."""
     expansions = 0
     while expansions < budget:
@@ -232,7 +235,7 @@ def random_arm(game: StripGame, state: StripState, budget: int, rng: random.Rand
             valid = game.getValidMoves(cur)
             choices = [a for a, v in enumerate(valid) if v]
             expansions += 1
-            cur = apply_fold(cur, *decode(rng.choice(choices)))
+            cur = game.getNextState(cur, 1, rng.choice(choices))[0]
             if expansions >= budget:
                 break
         if cur.is_solved:
