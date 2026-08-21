@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 
 from .grid import GridGame, GridState, apply_fold, decode, legal_actions
@@ -57,10 +58,25 @@ def explore(game: GridGame) -> tuple[bool, int, int | None, bool]:
     return best[0] is not None, len(seen), best[0], not capped[0]
 
 
-def survey(shapes, count: int, seed: int, family: str) -> list[dict]:
+def _write(path: str, payload: dict) -> None:
+    """Atomically write partial results: temp file plus rename."""
+    tmp = path + ".tmp"
+    with open(tmp, "w") as fh:
+        json.dump(payload, fh, indent=2)
+    os.replace(tmp, path)
+
+
+def survey(shapes, count: int, seed: int, family: str, out: str | None = None,
+           started: float | None = None) -> list[dict]:
+    """Exhaustively search each shape's instances.
+
+    Emits after every shape rather than only at the end, so a crash or a watchdog
+    kill costs at most the shape in flight. Shapes are ordered smallest-first by the
+    caller, so a partial file is still a usable prefix of the survey.
+    """
     rows = []
     for m, n in shapes:
-        started = time.time()
+        shape_started = time.time()
         instances = make_set(m, n, count, seed=seed, family=family)
         results = [explore(GridGame(h, v)) for h, v in instances]
         solvable = [r for r in results if r[0]]
@@ -77,10 +93,16 @@ def survey(shapes, count: int, seed: int, family: str) -> list[dict]:
                 "mean_states": sum(r[1] for r in results) / max(1, len(results)),
                 "max_states": max((r[1] for r in results), default=0),
                 "all_complete": all(r[3] for r in results),
-                "seconds": round(time.time() - started, 1),
+                "seconds": round(time.time() - shape_started, 1),
             }
         )
         print(rows[-1], flush=True)
+        if out is not None:
+            _write(out, {
+                "rows": rows, "seed": seed, "family": family, "count": count,
+                "state_cap": STATE_CAP, "partial": True,
+                "wall_clock_s": round(time.time() - started, 1) if started else None,
+            })
     return rows
 
 
@@ -99,17 +121,17 @@ def main() -> None:
         shapes.append((int(m), int(n)))
 
     started = time.time()
-    rows = survey(shapes, args.count, args.seed, args.family)
+    rows = survey(shapes, args.count, args.seed, args.family, args.out, started)
     payload = {
         "rows": rows,
         "seed": args.seed,
         "family": args.family,
         "count": args.count,
         "state_cap": STATE_CAP,
+        "partial": False,
         "wall_clock_s": round(time.time() - started, 1),
     }
-    with open(args.out, "w") as fh:
-        json.dump(payload, fh, indent=2)
+    _write(args.out, payload)
     print(f"wrote {args.out}")
 
 

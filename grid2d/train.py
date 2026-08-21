@@ -32,6 +32,18 @@ TRAIN_SEED = 900_001  # disjoint from the evaluation seed
 CURVE_SHAPES = [(8, 8), (6, 14)]
 
 
+def _write_curve(args: dict, history: list) -> None:
+    """Atomically write the learning curve so far.
+
+    Temp file plus rename: os.replace is atomic on POSIX, so a kill between the
+    two never leaves a half-written learning_curve.json behind.
+    """
+    tmp = CURVE_PATH + ".tmp"
+    with open(tmp, "w") as fh:
+        json.dump({"args": args, "history": history}, fh, indent=2)
+    os.replace(tmp, CURVE_PATH)
+
+
 def budget_for(m: int, n: int, slack: int = 4) -> int:
     """Fold budget scaled to the instance.
 
@@ -140,6 +152,11 @@ def main() -> None:
         )
         net.save(os.path.join(CHECKPOINT_DIR, f"iter{iteration:02d}.pt"))
         net.save(os.path.join(CHECKPOINT_DIR, "final.pt"))
+        # Write the curve every iteration, not just at the end: a crash or a
+        # watchdog kill should cost at most the iteration in flight, never the
+        # whole history. Written to a temp file and renamed so a kill mid-write
+        # cannot leave truncated JSON on disk.
+        _write_curve(vars(args), history)
         print(
             f"iter {iteration:2d}  loss {loss:.4f}  "
             f"self-play {solved / args.episodes:.3f}  held-out {held}  "
@@ -147,8 +164,7 @@ def main() -> None:
             flush=True,
         )
 
-    with open(CURVE_PATH, "w") as fh:
-        json.dump({"args": vars(args), "history": history}, fh, indent=2)
+    _write_curve(vars(args), history)
     print(f"done in {time.time() - started:.0f}s -> {CURVE_PATH}")
 
 

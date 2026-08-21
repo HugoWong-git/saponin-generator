@@ -1,0 +1,144 @@
+{
+  "args": {
+    "iterations": 12,
+    "episodes": 30,
+    "sims": 15,
+    "pool": 60,
+    "curve_per_shape": 40,
+    "curve_seed": 777001,
+    "seed": 7,
+    "window": 4
+  },
+  "history": [
+    {
+      "iteration": 0,
+      "loss": null,
+      "self_play_solve_rate": null,
+      "held_out": {
+        "8x8": 0.9,
+        "6x14": 0.7
+      },
+      "seconds": 40.3
+    },
+    {
+      "iteration": 1,
+      "loss": 3.3466742038726807,
+      "self_play_solve_rate": 0.9666666666666667,
+      "held_out": {
+        "8x8": 0.85,
+        "6x14": 0.65
+      },
+      "seconds": 221.4
+    },
+    {
+      "iteration": 2,
+      "loss": 2.989440441131592,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "8x8": 0.9,
+        "6x14": 0.75
+      },
+      "seconds": 341.4
+    },
+    {
+      "iteration": 3,
+      "loss": 2.912282705307007,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "8x8": 0.95,
+        "6x14": 0.725
+      },
+      "seconds": 480.3
+    },
+    {
+      "iteration": 4,
+      "loss": 1.429530382156372,
+      "self_play_solve_rate": 0.9666666666666667,
+      "held_out": {
+        "8x8": 0.925,
+        "6x14": 0.825
+      },
+      "seconds": 598.3
+    },
+    {
+      "iteration": 5,
+      "loss": 0.8724003434181213,
+      "self_play_solve_rate": 0.9666666666666667,
+      "held_out": {
+        "8x8": 0.9,
+        "6x14": 0.675
+      },
+      "seconds": 718.7
+    },
+    {
+      "iteration": 6,
+      "loss": 0.6898860335350037,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "8x8": 0.875,
+        "6x14": 0.725
+      },
+      "seconds": 810.0
+    },
+    {
+      "iteration": 7,
+      "loss": 0.3207108974456787,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "8x8": 0.9,
+        "6x14": 0.725
+      },
+      "seconds": 896.8
+    },
+    {
+      "iteration": 8,
+      "loss": 0.34091582894325256,
+      "self_play_solve_rate": 0.9,
+      "held_out": {
+        "8x8": 0.925,
+        "6x14": 0.75
+      },
+      "seconds": 997.8
+    },
+    {
+      "iteration": 9,
+      "loss": 0.07602427899837494,
+      "self_play_solve_rate": 0.9666666666666667,
+      "held_out": {
+        "8x8": 0.9,
+        "6x14": 0.725
+      },
+      "seconds": 1084.0
+    },
+    {
+      "iteration": 10,
+      "loss": 0.038353290408849716,
+      "self_play_solve_rate": 0.9666666666666667,
+      "held_out": {
+        "8x8": 0.85,
+        "6x14": 0.675
+      },
+      "seconds": 1164.3
+    },
+    {
+      "iteration": 11,
+      "loss": 0.10039336234331131,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "8x8": 0.825,
+        "6x14": 0.725
+      },
+      "seconds": 1246.2
+    },
+    {
+      "iteration": 12,
+      "loss": 0.0373634435236454,
+      "self_play_solve_rate": 0.9666666666666667,
+      "held_out": {
+        "8x8": 0.85,
+        "6x14": 0.725
+      },
+      "seconds": 1327.7
+    }
+  ]
+}
