@@ -41,8 +41,20 @@ python -m pytest smoke_test/tests -q            # P1: environment correctness
 python -m smoke_test.brute_force --test-sets    # oracle over every test instance
 python -m smoke_test.train --iterations 15 --episodes 80 --sims 25 --seed 7
 python -m smoke_test.evaluate --budget 40 --seeds 1 2 3 4 5
+
+# control arm: the same net with random weights, to separate learning from architecture
+python -c "import torch; from smoke_test.net import NetWrapper; torch.manual_seed(0); \
+  NetWrapper().save('smoke_test/checkpoints/untrained_seed0.pt')"
+python -m smoke_test.evaluate --budget 40 --seeds 1 2 3 4 5 \
+  --checkpoint smoke_test/checkpoints/untrained_seed0.pt \
+  --out smoke_test/results_untrained.json
+
 python -m smoke_test.plots
+python -m smoke_test.report --inject           # rewrites the tables in RESULTS.md
 ```
+
+`report.py --inject` regenerates every table in `RESULTS.md` from the run JSON, so no
+number in that file is typed by hand.
 
 Dependencies are numpy, torch (CPU) and matplotlib only. No GPU, no dataset downloads,
 no external binaries.

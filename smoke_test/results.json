@@ -1,0 +1,391 @@
+{
+  "args": {
+    "budget": 40,
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "checkpoint": "/home/user/saponin-generator/smoke_test/checkpoints/final.pt",
+    "limit": null,
+    "out": "/home/user/saponin-generator/smoke_test/results.json"
+  },
+  "checkpoint_used": "/home/user/saponin-generator/smoke_test/checkpoints/final.pt",
+  "wall_clock_s": 135.23754811286926,
+  "rows": [
+    {
+      "n": 6,
+      "arm": "random",
+      "budget": 40,
+      "n_instances": 32,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "solve_rate_mean": 1.0,
+      "solve_rate_sd": 0.0,
+      "expansions_per_solve_per_seed": [
+        8.8125,
+        6.71875,
+        6.4375,
+        8.125,
+        6.875
+      ],
+      "expansions_per_solve_mean": 7.39375,
+      "wall_clock_s": 0.3731839656829834
+    },
+    {
+      "n": 6,
+      "arm": "mcts",
+      "budget": 40,
+      "n_instances": 32,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "solve_rate_mean": 1.0,
+      "solve_rate_sd": 0.0,
+      "expansions_per_solve_per_seed": [
+        7.5625,
+        6.65625,
+        6.28125,
+        7.375,
+        7.34375
+      ],
+      "expansions_per_solve_mean": 7.04375,
+      "wall_clock_s": 0.4353516101837158
+    },
+    {
+      "n": 6,
+      "arm": "mcts+net",
+      "budget": 40,
+      "n_instances": 32,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "solve_rate_mean": 1.0,
+      "solve_rate_sd": 0.0,
+      "expansions_per_solve_per_seed": [
+        5.28125,
+        5.28125,
+        5.125,
+        5.125,
+        5.21875
+      ],
+      "expansions_per_solve_mean": 5.20625,
+      "wall_clock_s": 0.5217993259429932
+    },
+    {
+      "n": 8,
+      "arm": "random",
+      "budget": 40,
+      "n_instances": 128,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.8671875,
+        0.875,
+        0.90625,
+        0.90625,
+        0.875
+      ],
+      "solve_rate_mean": 0.8859375,
+      "solve_rate_sd": 0.018814991529362963,
+      "expansions_per_solve_per_seed": [
+        11.657657657657658,
+        12.25,
+        12.21551724137931,
+        12.241379310344827,
+        11.741071428571429
+      ],
+      "expansions_per_solve_mean": 12.021125127590645,
+      "wall_clock_s": 4.931265354156494
+    },
+    {
+      "n": 8,
+      "arm": "mcts",
+      "budget": 40,
+      "n_instances": 128,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.875,
+        0.890625,
+        0.890625,
+        0.90625,
+        0.8984375
+      ],
+      "solve_rate_mean": 0.8921875,
+      "solve_rate_sd": 0.011587810136086974,
+      "expansions_per_solve_per_seed": [
+        12.116071428571429,
+        11.605263157894736,
+        11.482456140350877,
+        11.474137931034482,
+        11.208695652173914
+      ],
+      "expansions_per_solve_mean": 11.577324862005087,
+      "wall_clock_s": 5.950642347335815
+    },
+    {
+      "n": 8,
+      "arm": "mcts+net",
+      "budget": 40,
+      "n_instances": 128,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9921875
+      ],
+      "solve_rate_mean": 0.9984375,
+      "solve_rate_sd": 0.0034938562148434213,
+      "expansions_per_solve_per_seed": [
+        7.3984375,
+        7.3125,
+        7.4296875,
+        7.3125,
+        7.535433070866142
+      ],
+      "expansions_per_solve_mean": 7.397711614173228,
+      "wall_clock_s": 3.0899248123168945
+    },
+    {
+      "n": 10,
+      "arm": "random",
+      "budget": 40,
+      "n_instances": 200,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.755,
+        0.7,
+        0.73,
+        0.725,
+        0.715
+      ],
+      "solve_rate_mean": 0.725,
+      "solve_rate_sd": 0.02031009601158992,
+      "expansions_per_solve_per_seed": [
+        15.278145695364238,
+        15.492857142857142,
+        15.60958904109589,
+        15.917241379310346,
+        13.958041958041958
+      ],
+      "expansions_per_solve_mean": 15.251175043333914,
+      "wall_clock_s": 16.011022090911865
+    },
+    {
+      "n": 10,
+      "arm": "mcts",
+      "budget": 40,
+      "n_instances": 200,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.815,
+        0.8,
+        0.77,
+        0.785,
+        0.79
+      ],
+      "solve_rate_mean": 0.792,
+      "solve_rate_sd": 0.01680773631397159,
+      "expansions_per_solve_per_seed": [
+        16.300613496932517,
+        16.7375,
+        16.2012987012987,
+        16.643312101910826,
+        16.20886075949367
+      ],
+      "expansions_per_solve_mean": 16.418317011927144,
+      "wall_clock_s": 16.684656620025635
+    },
+    {
+      "n": 10,
+      "arm": "mcts+net",
+      "budget": 40,
+      "n_instances": 200,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.975,
+        0.985,
+        0.985,
+        0.975,
+        0.975
+      ],
+      "solve_rate_mean": 0.979,
+      "solve_rate_sd": 0.005477225575051666,
+      "expansions_per_solve_per_seed": [
+        9.912820512820513,
+        9.543147208121827,
+        9.65989847715736,
+        9.851282051282052,
+        9.738461538461538
+      ],
+      "expansions_per_solve_mean": 9.741121957568659,
+      "wall_clock_s": 7.925588130950928
+    },
+    {
+      "n": 12,
+      "arm": "random",
+      "budget": 40,
+      "n_instances": 200,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.525,
+        0.48,
+        0.535,
+        0.55,
+        0.51
+      ],
+      "solve_rate_mean": 0.52,
+      "solve_rate_sd": 0.0266926956300783,
+      "expansions_per_solve_per_seed": [
+        18.333333333333332,
+        18.041666666666668,
+        18.130841121495326,
+        19.427272727272726,
+        18.470588235294116
+      ],
+      "expansions_per_solve_mean": 18.480740416812434,
+      "wall_clock_s": 29.729297876358032
+    },
+    {
+      "n": 12,
+      "arm": "mcts",
+      "budget": 40,
+      "n_instances": 200,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.61,
+        0.58,
+        0.625,
+        0.61,
+        0.605
+      ],
+      "solve_rate_mean": 0.606,
+      "solve_rate_sd": 0.01635542723379614,
+      "expansions_per_solve_per_seed": [
+        20.40983606557377,
+        19.586206896551722,
+        19.872,
+        21,
+        20.181818181818183
+      ],
+      "expansions_per_solve_mean": 20.209972228788736,
+      "wall_clock_s": 31.929351568222046
+    },
+    {
+      "n": 12,
+      "arm": "mcts+net",
+      "budget": 40,
+      "n_instances": 200,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_per_seed": [
+        0.895,
+        0.865,
+        0.88,
+        0.89,
+        0.89
+      ],
+      "solve_rate_mean": 0.884,
+      "solve_rate_sd": 0.011937336386313332,
+      "expansions_per_solve_per_seed": [
+        12.296089385474861,
+        12.335260115606937,
+        12.568181818181818,
+        13.286516853932584,
+        12.775280898876405
+      ],
+      "expansions_per_solve_mean": 12.652265814414521,
+      "wall_clock_s": 16.67913246154785
+    }
+  ]
+}

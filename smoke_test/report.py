@@ -130,17 +130,67 @@ def margin_check(filename: str = "results.json") -> str:
     return "\n".join(lines)
 
 
+def control_table() -> str:
+    """Untrained net vs uniform priors: isolates learning from architecture.
+
+    The net arm differs from the uniform arm in two ways at once -- it has a network, and
+    its leaf value blends a policy-guided rollout with the value head. Running the same
+    arm with random weights separates those: whatever the untrained net scores is what the
+    machinery is worth before any learning happens.
+    """
+    trained, untrained = _load("results.json"), _load("results_untrained.json")
+    if not trained or not untrained:
+        return "_results.json or results_untrained.json missing_"
+    uniform = {r["n"]: r for r in trained["rows"] if r["arm"] == "mcts"}
+    fresh = {r["n"]: r for r in untrained["rows"] if r["arm"] == "mcts+net"}
+    learned = {r["n"]: r for r in trained["rows"] if r["arm"] == "mcts+net"}
+    lines = [
+        "| n | SP-MCTS uniform | same net, random weights | trained net |",
+        "|---|---|---|---|",
+    ]
+    for n in sorted(uniform):
+        lines.append(
+            f"| {n} | {uniform[n]['solve_rate_mean']:.3f} "
+            f"+/- {uniform[n]['solve_rate_sd']:.3f} | "
+            f"{fresh[n]['solve_rate_mean']:.3f} +/- {fresh[n]['solve_rate_sd']:.3f} | "
+            f"{learned[n]['solve_rate_mean']:.3f} "
+            f"+/- {learned[n]['solve_rate_sd']:.3f} |"
+        )
+    return "\n".join(lines)
+
+
+BLOCKS = {
+    "oracle": oracle_table,
+    "arms": arms_table,
+    "curve": curve_table,
+    "margin": margin_check,
+    "control": control_table,
+}
+
+
+def inject(path: str = os.path.join(HERE, "RESULTS.md")) -> None:
+    """Rewrite each <!-- GENERATED:name --> block in RESULTS.md from the run JSON."""
+    with open(path) as fh:
+        text = fh.read()
+    for name, fn in BLOCKS.items():
+        start, end = f"<!-- GENERATED:{name} -->", f"<!-- /GENERATED:{name} -->"
+        i, j = text.find(start), text.find(end)
+        if i < 0 or j < 0:
+            raise SystemExit(f"marker for {name} missing from {path}")
+        text = text[: i + len(start)] + "\n" + fn() + "\n" + text[j:]
+    with open(path, "w") as fh:
+        fh.write(text)
+    print(f"injected {', '.join(BLOCKS)} -> {path}")
+
+
 if __name__ == "__main__":
     import sys
 
     which = sys.argv[1] if len(sys.argv) > 1 else "all"
-    blocks = {
-        "oracle": oracle_table,
-        "arms": arms_table,
-        "curve": curve_table,
-        "margin": margin_check,
-    }
-    for name, fn in blocks.items():
-        if which in ("all", name):
-            print(f"\n### {name}\n")
-            print(fn())
+    if which == "--inject":
+        inject()
+    else:
+        for name, fn in BLOCKS.items():
+            if which in ("all", name):
+                print(f"\n### {name}\n")
+                print(fn())
