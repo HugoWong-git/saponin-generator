@@ -44,3 +44,4 @@ smoke_test/checkpoints/
 grid2d/checkpoints/
 # ...but the smoke_test plots are deliverables referenced by RESULTS.md
 !smoke_test/plots/*.png
+!grid2d/plots/*.png
