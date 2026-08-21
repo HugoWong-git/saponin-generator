@@ -1,0 +1,74 @@
+{
+  "rows": [
+    {
+      "m": 3,
+      "n": 3,
+      "family": "maekawa",
+      "n_instances": 200,
+      "solvable": 176,
+      "solvable_fraction": 0.88,
+      "min_folds_values": [
+        4
+      ],
+      "expected_min_folds": 4,
+      "mean_states": 12.28,
+      "max_states": 25,
+      "all_complete": true,
+      "seconds": 0.4
+    },
+    {
+      "m": 2,
+      "n": 4,
+      "family": "maekawa",
+      "n_instances": 128,
+      "solvable": 112,
+      "solvable_fraction": 0.875,
+      "min_folds_values": [
+        4
+      ],
+      "expected_min_folds": 4,
+      "mean_states": 15.0,
+      "max_states": 31,
+      "all_complete": true,
+      "seconds": 3.7
+    },
+    {
+      "m": 4,
+      "n": 4,
+      "family": "maekawa",
+      "n_instances": 200,
+      "solvable": 61,
+      "solvable_fraction": 0.305,
+      "min_folds_values": [
+        6
+      ],
+      "expected_min_folds": 6,
+      "mean_states": 11.4,
+      "max_states": 67,
+      "all_complete": true,
+      "seconds": 1.6
+    },
+    {
+      "m": 4,
+      "n": 5,
+      "family": "maekawa",
+      "n_instances": 200,
+      "solvable": 26,
+      "solvable_fraction": 0.13,
+      "min_folds_values": [
+        7
+      ],
+      "expected_min_folds": 7,
+      "mean_states": 8.28,
+      "max_states": 55,
+      "all_complete": true,
+      "seconds": 9.7
+    }
+  ],
+  "seed": 11,
+  "family": "maekawa",
+  "count": 200,
+  "state_cap": 2000000,
+  "partial": false,
+  "wall_clock_s": 15.4
+}

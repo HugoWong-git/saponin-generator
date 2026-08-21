@@ -24,10 +24,24 @@ Read the learning-curve table alongside the arms table with one caveat: the curv
 measured on 40 instances per shape, so a single point carries roughly +/-0.07 of
 binomial noise, whereas the arms table uses 120 instances x 5 seeds.
 
-**Status of the ground-truth table below: partial.** The oracle survey was still running
-when this was written and its 6x14 and 10x10 rows, plus the entire `maekawa` family, are
-absent. The rows present were recovered from the run's stdout log by
-`grid2d/recover_oracle.py` and the JSON is flagged `partial: true`.
+**Status of the ground-truth table below: the `derived` half is partial.** Its oracle run
+hit a 5400s wall-clock cap while still working through 6x14, so the **6x14 and 10x10 rows
+were never obtained** — 6x6 and 8x8 are complete and were recovered from the run's stdout
+by `grid2d/recover_oracle.py` (`partial: true` in the JSON). The `maekawa` half is
+complete: it never started before the cap, and was re-run afterwards at its original
+parameters, taking 15s.
+
+Those two missing rows were **not** retried at a reduced instance count. 6x14 alone
+consumed ~5250s without finishing 120 instances, so a retry at the same protocol would
+fail the same way, and changing the instance count mid-table would make the rows
+non-comparable. Whether to obtain them at a smaller count is left open.
+
+The `maekawa` rows are worth reading directly: **every one of these instances satisfies
+Maekawa's theorem at every interior vertex, and most of the larger ones are still
+globally unfoldable** — 139/200 at 4x4 and 174/200 at 4x5. The local theorems are
+necessary and not sufficient, measured rather than cited. Note also that the whole 2x4
+pattern space is only 128 Maekawa-valid instances, which is why that row has 128 and not
+200.
 
 ---
 
@@ -40,6 +54,15 @@ absent. The rows present were recovered from the run's stdout log by
 |---|---|---|---|---|---|---|---|
 | 6x6 | 120 | 120/120 (1.000) | 10 | 10 | 145 | 1173 | yes |
 | 8x8 | 120 | 120/120 (1.000) | 14 | 14 | 618 | 5627 | yes |
+
+**Instances that satisfy Maekawa at every interior vertex** (seed 11, 15.4s):
+
+| shape | instances | solvable | min folds | expected | mean states | max | complete |
+|---|---|---|---|---|---|---|---|
+| 3x3 | 200 | 176/200 (0.880) | 4 | 4 | 12 | 25 | yes |
+| 2x4 | 128 | 112/128 (0.875) | 4 | 4 | 15 | 31 | yes |
+| 4x4 | 200 | 61/200 (0.305) | 6 | 6 | 11 | 67 | yes |
+| 4x5 | 200 | 26/200 (0.130) | 7 | 7 | 8 | 55 | yes |
 <!-- /GENERATED:oracle -->
 
 ## Arms
