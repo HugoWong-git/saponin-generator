@@ -31,7 +31,10 @@ def _shape_order(rows):
     seen = {}
     for r in rows:
         seen.setdefault(r["shape"], (r["m"], r["n"]))
-    return sorted(seen, key=lambda s: seen[s])
+    # Order by crease-line count -- which is what sets the fold budget -- then by
+    # cell count. Sorting by the raw (m, n) tuple would put 6x14 before 8x8, which
+    # reads as a difficulty inversion on the plots and tables.
+    return sorted(seen, key=lambda s: (seen[s][0] + seen[s][1] - 2, seen[s][0] * seen[s][1]))
 
 
 def oracle_table() -> str:

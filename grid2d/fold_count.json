@@ -1,0 +1,250 @@
+{
+  "summary": {
+    "shape": "8x8",
+    "crease_lines": 14,
+    "instances": 25,
+    "policy_solved": 25,
+    "policy_matched_oracle_min": 25,
+    "distinct_oracle_min_values": [
+      14
+    ],
+    "distinct_policy_fold_counts": [
+      14
+    ],
+    "mean_distinct_sequences_per_instance": 200000.0,
+    "min_distinct_sequences": 200000,
+    "instances_where_sequence_count_hit_cap": 25,
+    "sequence_cap": 200000,
+    "budget_per_step": 18,
+    "seed": 3,
+    "eval_seed": 500003,
+    "checkpoint": "grid2d/checkpoints/final.pt"
+  },
+  "rows": [
+    {
+      "instance": 0,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 1,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 2,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 3,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 4,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 5,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 6,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 7,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 8,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 9,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 10,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 11,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 12,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 13,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 14,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 15,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 16,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 17,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 18,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 19,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 20,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 21,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 22,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 23,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    },
+    {
+      "instance": 24,
+      "oracle_min_folds": 14,
+      "oracle_distinct_sequences": 200000,
+      "oracle_count_complete": false,
+      "policy_solved": true,
+      "policy_folds": 14,
+      "matches_oracle_min": true
+    }
+  ]
+}

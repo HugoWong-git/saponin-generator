@@ -99,7 +99,44 @@ Each is described in its commit message.
 ## 4. Deliverable: fold count vs oracle minimum
 
 <!-- FOLDCOUNT -->
-_(populated when the run completes)_
+**Question asked:** on the 8x8 test cases, does the trained policy's fold sequence match
+the oracle's minimum-fold-count solution, or does it just reach a valid but non-minimal
+solution?
+
+**Answer: it matches, on all 25 instances — but the comparison cannot distinguish
+anything, because every complete solution in this action model has the same length.**
+
+Run: `python -m grid2d.fold_count --shape 8x8 --count 25` (seed 3, held-out eval seed
+500003, `checkpoints/final.pt`). Raw output in `grid2d/fold_count.json`.
+
+| measurement | value |
+|---|---|
+| crease lines on an 8x8 grid | 14 |
+| instances | 25 |
+| policy solved | 25 / 25 |
+| policy fold count matched oracle minimum | 25 / 25 |
+| distinct oracle minimum values across all instances | `[14]` |
+| distinct policy fold counts across all instances | `[14]` |
+| instances where the distinct-sequence count hit the 200,000 cap | 25 / 25 |
+
+**Why the match is structural, not an achievement.** An all-layers simple fold folds
+exactly one crease line, and a solved state requires every crease line folded. So any
+complete sequence on an 8x8 grid is exactly `(m-1)+(n-1)` = 14 folds. There is no such
+thing as a non-minimal complete solution here. The oracle confirms this empirically
+rather than by assertion: across every instance it searched, the only minimum-fold value
+observed was 14, matching the expected value.
+
+**The fidelity question this leaves open.** Each of the 25 instances admits **at least
+200,000 distinct valid fold sequences** — the enumeration hit its cap on every one, so
+200,000 is a floor, not a count. All of them are the same length. So fold count cannot
+rank them, and the policy's choice among ~10^5+ equally-short sequences is unmeasured by
+this metric.
+
+Whether that means the reward needs a different quality term, and what that term should
+be, is an architectural decision. **Not made here** — it is the "what does *best route*
+mean" question already open in `research/build_order.md`, now with a concrete measurement
+attached to it. Note the same degeneracy was found in the 1-D domain, so this is the
+second domain in which fold count carries no signal.
 <!-- /FOLDCOUNT -->
 
 ---

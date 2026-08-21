@@ -82,9 +82,9 @@ def solve_rate_by_shape() -> str | None:
     if not data:
         return None
     rows = data["rows"]
-    shapes = sorted({r["shape"] for r in rows}, key=lambda s: rows[
-        [r["shape"] for r in rows].index(s)
-    ]["m"] * 100 + rows[[r["shape"] for r in rows].index(s)]["n"])
+    from .report import _shape_order
+
+    shapes = _shape_order(rows)
     arms = [a for a in ("random", "mcts", "mcts+net") if any(r["arm"] == a for r in rows)]
 
     fig, ax = plt.subplots(figsize=(8.5, 4.6))
