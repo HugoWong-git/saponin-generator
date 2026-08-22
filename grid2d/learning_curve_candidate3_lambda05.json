@@ -1,0 +1,83 @@
+{
+  "args": {
+    "iterations": 6,
+    "episodes": 80,
+    "sims": 25,
+    "pool": 60,
+    "curve_per_shape": 80,
+    "curve_seed": 777001,
+    "seed": 7,
+    "window": 4,
+    "train_shapes": "6x14",
+    "curve_shapes": "6x14",
+    "curve_path": "grid2d/learning_curve_candidate3_lambda05.json",
+    "checkpoint_dir": "grid2d/checkpoints",
+    "tag": "_candidate3_lambda05",
+    "canon_lambda": 0.5
+  },
+  "history": [
+    {
+      "iteration": 0,
+      "loss": null,
+      "self_play_solve_rate": null,
+      "held_out": {
+        "6x14": 0.725
+      },
+      "seconds": 32.2
+    },
+    {
+      "iteration": 1,
+      "loss": 3.1057851314544678,
+      "self_play_solve_rate": 0.925,
+      "held_out": {
+        "6x14": 0.6875
+      },
+      "seconds": 241.8
+    },
+    {
+      "iteration": 2,
+      "loss": 2.1369192600250244,
+      "self_play_solve_rate": 0.9875,
+      "held_out": {
+        "6x14": 0.7875
+      },
+      "seconds": 406.6
+    },
+    {
+      "iteration": 3,
+      "loss": 0.8870295286178589,
+      "self_play_solve_rate": 0.975,
+      "held_out": {
+        "6x14": 0.7625
+      },
+      "seconds": 530.0
+    },
+    {
+      "iteration": 4,
+      "loss": 1.0059680938720703,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "6x14": 0.85
+      },
+      "seconds": 635.1
+    },
+    {
+      "iteration": 5,
+      "loss": 0.307397723197937,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "6x14": 0.825
+      },
+      "seconds": 723.5
+    },
+    {
+      "iteration": 6,
+      "loss": 0.1324051320552826,
+      "self_play_solve_rate": 0.9875,
+      "held_out": {
+        "6x14": 0.7875
+      },
+      "seconds": 796.1
+    }
+  ]
+}
