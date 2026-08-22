@@ -17,7 +17,7 @@ import os
 import random
 import time
 
-from .grid import GridGame
+from .grid import AXIS_H, AXIS_V, GridGame, decode
 from .instances import make_set
 from .net import NetWrapper
 from smoke_test.sp_mcts import SPMCTS
@@ -64,12 +64,58 @@ def budget_for(m: int, n: int, slack: int = 4) -> int:
     return (m - 1) + (n - 1) + slack
 
 
-def self_play_episode(game: GridGame, net: NetWrapper, sims: int, rng: random.Random):
+def _count_inversions(ks: list[int]) -> int:
+    """Pairs out of ascending order -- O(L^2), fine for L <= ~20 crease lines."""
+    return sum(1 for i in range(len(ks)) for j in range(i + 1, len(ks)) if ks[i] > ks[j])
+
+
+def canonical_order_penalty(actions: list[int], m: int, n: int) -> float:
+    """Candidate 3 diagnostic (cheap path): inversions against ascending crease index.
+
+    CANDIDATE-3-DIAGNOSTIC: makes no physical-plausibility claim. It exists only to test
+    whether self-play can respond to ANY non-flat terminal signal in a domain where every
+    complete sequence currently scores identically (see grid2d/RESULTS.md, fold_count.json
+    -- >=200,000 equally-valid orderings per 8x8 instance). A positive result here shows
+    the pipeline CAN learn an arbitrary target, not that it has learned anything about
+    real fold quality. See research/benchmarks_verification.md for why OrigamiBench's IoU
+    metric could not supply a real one: it scores distance-to-target, and every complete
+    map-folding sequence reaches the identical target, so IoU is 1.0 for all of them.
+
+    Counts inversions separately per axis (vertical creases 0..n-2, horizontal creases
+    0..m-2), normalised by the maximum possible for that axis's sequence length, so the
+    penalty is comparable across the two axis lengths and across grid shapes.
+    """
+    v_ks = [decode(m, n, a)[1] for a in actions if decode(m, n, a)[0] == AXIS_V]
+    h_ks = [decode(m, n, a)[1] for a in actions if decode(m, n, a)[0] == AXIS_H]
+    inv_v, inv_h = _count_inversions(v_ks), _count_inversions(h_ks)
+    max_v = len(v_ks) * (len(v_ks) - 1) / 2
+    max_h = len(h_ks) * (len(h_ks) - 1) / 2
+    max_total = max_v + max_h
+    return (inv_v + inv_h) / max_total if max_total > 0 else 0.0
+
+
+def self_play_episode(
+    game: GridGame,
+    net: NetWrapper,
+    sims: int,
+    rng: random.Random,
+    canon_lambda: float = 0.0,
+):
     state = game.getInitBoard()
     trace = []
+    actions_taken: list[int] = []
     while True:
         score = game.getGameEnded(state)
         if score != 0.0:
+            # Cheap-path reward shaping ONLY: this adjusts the training target written
+            # into the replay examples below. It does NOT touch getGameEnded, GridState,
+            # or stringRepresentation, so SPMCTS.search()'s own tree search and rollout
+            # -- which call game.getGameEnded directly -- see only the raw 0/1 score,
+            # exactly as before. Only genuine solves (score > 0) are shaped; the
+            # terminal-failure branch of getGameEnded is untouched.
+            if score > 0.0 and canon_lambda > 0.0:
+                penalty = canonical_order_penalty(actions_taken, game.m, game.n)
+                score = score - canon_lambda * penalty
             return [(s, pi, score) for s, pi in trace], score
         mcts = SPMCTS(game, net=net, rng=rng)
         for _ in range(sims):
@@ -84,6 +130,7 @@ def self_play_episode(game: GridGame, net: NetWrapper, sims: int, rng: random.Ra
             if r <= cumulative:
                 action = a
                 break
+        actions_taken.append(action)
         state = game.getNextState(state, 1, action)[0]
 
 
@@ -120,6 +167,10 @@ def main() -> None:
     ap.add_argument("--curve-path", default=CURVE_PATH)
     ap.add_argument("--checkpoint-dir", default=CHECKPOINT_DIR)
     ap.add_argument("--tag", default="", help="suffix for checkpoint filenames")
+    ap.add_argument(
+        "--canon-lambda", type=float, default=0.0,
+        help="Candidate-3 diagnostic weight (0.0 = original behaviour, unshaped)",
+    )
     args = ap.parse_args()
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
@@ -156,7 +207,9 @@ def main() -> None:
         examples, solved = [], 0
         for _ in range(args.episodes):
             m, n, hmv, vmv = rng.choice(pool)
-            episode, score = self_play_episode(GridGame(hmv, vmv), net, args.sims, rng)
+            episode, score = self_play_episode(
+                GridGame(hmv, vmv), net, args.sims, rng, args.canon_lambda
+            )
             examples += episode
             solved += score > 0
         recent.append(examples)
