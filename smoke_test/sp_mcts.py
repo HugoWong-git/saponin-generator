@@ -35,6 +35,14 @@ W_MAX = 1.0
 D_VARIANCE = 1.0
 FPU_VALUE = 0.0  # assumed value of an unvisited child; see the note in search()
 
+# HYPOTHESIS-2 TEST (grid2d investigation): the first change in that investigation to
+# touch this file rather than a domain module. Every prior test there held search
+# behaviour fixed to isolate other variables; this one deliberately varies it, because
+# the hypothesis under test IS the rollout mechanism -- see grid2d/RESULTS.md and the
+# session's Track-C self-play-saturation comparison for why. Default 0.0 preserves the
+# original deterministic-from-policy rollout exactly; a caller opts in per-instance.
+ROLLOUT_EPSILON_DEFAULT = 0.0
+
 
 class SPMCTS:
     def __init__(
@@ -45,6 +53,7 @@ class SPMCTS:
         w_max: float = W_MAX,
         d_var: float = D_VARIANCE,
         rng: random.Random | None = None,
+        rollout_epsilon: float = ROLLOUT_EPSILON_DEFAULT,
     ):
         self.game = game
         self.net = net
@@ -52,6 +61,7 @@ class SPMCTS:
         self.w_max = w_max
         self.d_var = d_var
         self.rng = rng or random.Random(0)
+        self.rollout_epsilon = rollout_epsilon
 
         self.N: dict[tuple[str, int], int] = {}
         self.W: dict[tuple[str, int], float] = {}
@@ -113,6 +123,15 @@ class SPMCTS:
 
         Actions are drawn uniformly from the legal moves, or from the policy head
         restricted to them when a net is attached.
+
+        With a net, ``rollout_epsilon`` mixes in a uniform floor over the legal moves:
+        ``mixed = (1 - eps) * policy + eps * uniform``. This is an epsilon-mixing
+        exploration floor, not a temperature -- chosen because its guarantee (every
+        legal action keeps at least eps/|choices| probability) is absolute and does not
+        erode as the policy sharpens, whereas a fixed temperature's flattening power is
+        relative to the policy's own spread and weakens exactly as the policy
+        concentrates further. See ROLLOUT_EPSILON_DEFAULT's comment for why this
+        parameter exists at all.
         """
         while True:
             score = self.game.getGameEnded(state)
@@ -125,7 +144,17 @@ class SPMCTS:
             if self.net is None:
                 action = self.rng.choice(choices)
             else:
-                weights = [max(1e-6, self.net.predict(state)[0][a]) for a in choices]
+                raw = [max(1e-6, self.net.predict(state)[0][a]) for a in choices]
+                total = sum(raw)
+                policy_probs = [w / total for w in raw]
+                if self.rollout_epsilon > 0.0:
+                    uniform_p = 1.0 / len(choices)
+                    weights = [
+                        (1.0 - self.rollout_epsilon) * p + self.rollout_epsilon * uniform_p
+                        for p in policy_probs
+                    ]
+                else:
+                    weights = policy_probs
                 action = self.rng.choices(choices, weights=weights)[0]
             state = self.game.getNextState(state, 1, action)[0]
 

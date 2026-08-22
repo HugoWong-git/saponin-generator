@@ -100,7 +100,14 @@ def self_play_episode(
     sims: int,
     rng: random.Random,
     canon_lambda: float = 0.0,
+    rollout_epsilon: float = 0.0,
 ):
+    """rollout_epsilon (hypothesis-2 test): passed only to the SPMCTS instance used for
+    self-play data generation here, never to the held-out SPMCTS in
+    evaluate_curve_point or to evaluate.py's. Isolates the variable to self-play's own
+    rollout, so solve-rate numbers stay measured on the same eval-time mechanism as
+    every other track in this investigation.
+    """
     state = game.getInitBoard()
     trace = []
     actions_taken: list[int] = []
@@ -117,7 +124,7 @@ def self_play_episode(
                 penalty = canonical_order_penalty(actions_taken, game.m, game.n)
                 score = score - canon_lambda * penalty
             return [(s, pi, score) for s, pi in trace], score
-        mcts = SPMCTS(game, net=net, rng=rng)
+        mcts = SPMCTS(game, net=net, rng=rng, rollout_epsilon=rollout_epsilon)
         for _ in range(sims):
             mcts.search(state)
         temperature = 1.0 if len(trace) < TEMPERATURE_MOVES else 0.25
@@ -171,6 +178,11 @@ def main() -> None:
         "--canon-lambda", type=float, default=0.0,
         help="Candidate-3 diagnostic weight (0.0 = original behaviour, unshaped)",
     )
+    ap.add_argument(
+        "--rollout-epsilon", type=float, default=0.0,
+        help="Hypothesis-2 test: uniform floor mixed into self-play rollout action "
+             "sampling only (0.0 = original deterministic-from-policy rollout)",
+    )
     args = ap.parse_args()
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
@@ -208,7 +220,8 @@ def main() -> None:
         for _ in range(args.episodes):
             m, n, hmv, vmv = rng.choice(pool)
             episode, score = self_play_episode(
-                GridGame(hmv, vmv), net, args.sims, rng, args.canon_lambda
+                GridGame(hmv, vmv), net, args.sims, rng,
+                args.canon_lambda, args.rollout_epsilon,
             )
             examples += episode
             solved += score > 0
