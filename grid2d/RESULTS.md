@@ -4,11 +4,22 @@
 
 ## Go / no-go
 
-**Deliberately not written.** This run was executed unattended with an explicit
-instruction that milestone advancement is the reader's call, so no verdict is recorded
-here and no conclusion is drawn about what the numbers reflect. The tables below are the
-raw measurements; `../OVERNIGHT_LOG.md` lists what ran, what was fixed, and the open
-questions.
+**Deliberately not written.** Milestone advancement is the reader's call throughout this
+investigation, so no verdict is recorded here. What follows is a factual account of
+what was tried and what each test found; `../OVERNIGHT_LOG.md` covers the unattended
+overnight run specifically (guardrails, what was fixed, citation checks).
+
+**Status as of the end of this investigation: four hypotheses tested, three ruled out,
+one not confirmed by the specific fix tried.** See "Follow-up investigation" below for
+the full account. The trained network has not been shown to outperform plain SP-MCTS at
+any tested 2-D shape, across every variant of reward, compute, and search-exploration
+tried. Two paths remain open and untested: a much larger-scale self-play run (every run
+here used <=1,200 self-play games total, versus real AlphaZero's tens of millions — see
+the "scale" note in Follow-up investigation), or redesigning the domain itself so
+Kawasaki's theorem is a live constraint rather than trivially satisfied on a rectangular
+grid. Neither has been attempted.
+
+### Original overnight run — the raw measurements
 
 Three things a reader should carry into the tables, all factual:
 
@@ -135,3 +146,67 @@ Training args: `{'iterations': 12, 'episodes': 30, 'sims': 15, 'pool': 60, 'curv
 | 11 | 0.1004 | 1.000 | 0.725 | 0.825 | 1246 |
 | 12 | 0.0374 | 0.967 | 0.725 | 0.850 | 1328 |
 <!-- /GENERATED:curve -->
+
+---
+
+## Follow-up investigation: why doesn't 2-D training work?
+
+The overnight run above established that the trained net doesn't separate from plain
+SP-MCTS. Everything below is the systematic, hypothesis-by-hypothesis follow-up, run
+afterwards. Tables regenerated verbatim by `python -m grid2d.consolidate_investigation`
+from the run JSON — nothing here is typed by hand.
+
+<!-- CONSOLIDATED:hypotheses -->
+| hypothesis | test | key result | verdict |
+|---|---|---|---|
+| 1. Opponent-pool sampling | Compared 1-D's and 2-D's self-play code (both use one live network, no checkpoint pool) | Identical scheme in both; 1-D still learned | **Ruled out** -- not the differentiator |
+| 2. Compute/data starvation | Matched 1-D's per-iteration compute (80 episodes, 25 sims) at 6x6 and 6x14 | 6x6: trained 0.945 vs uniform 0.945 vs untrained 0.957. 6x14: trained 0.817 vs uniform 0.820 vs untrained 0.787 | **Ruled out** -- no separation at either shape, including 6x14 where real headroom exists |
+| 3. Reward degeneracy (flat reward across ~200k equally-valid orderings) | Candidate-3 diagnostic: canonical-order penalty, lambda=0.1 and lambda=0.5, direct inversion-count measurement | Ordering penalty: untrained 0.4792, lambda=0.1 0.4915, lambda=0.5 0.5114 (all statistically indistinguishable from 0.5 = random ordering) | **Ruled out** -- zero learning of the injected signal at 5x the strength; solve rate moved (lambda=0.5 vs untrained: +0.068 (pooled SD 0.034, beats noise)) with no corresponding ordering improvement |
+| 4. Rollout-policy sharpening / search collapse | Epsilon-mixing exploration floor (eps=0.25) on self-play rollout sampling only | Saturation timing unchanged (iter 5 of 6, range 0.963-1.000 -- see table above); solve rate vs untrained: +0.048 (pooled SD 0.032, beats noise); vs uniform: +0.015 (pooled SD 0.037, within noise) | **Not confirmed by this fix.** Correlational evidence (Track C) still stands; this specific eps=0.25 mitigation didn't change the saturation pattern it targeted |
+<!-- /CONSOLIDATED:hypotheses -->
+
+### Self-play saturation timing — the evidence behind hypothesis 4
+
+Every learning run's self-play solve rate, iteration by iteration. The question this
+answers: does self-play settle into a narrow, saturated pattern quickly (as every 2-D
+run does), or climb slowly with sustained oscillation before saturating (as the one
+successful 1-D run did)?
+
+<!-- CONSOLIDATED:saturation -->
+| run | self-play range | first hits 1.000 |
+|---|---|---|
+| 1-D (15 iter) -- the one that learned | 0.762-1.000 | iter 11 of 15 |
+| 2-D original (12 iter, 3 shapes) | 0.900-1.000 | iter 2 of 12 |
+| Track A: compute-matched, 6x6 | 0.963-1.000 | iter 3 of 6 |
+| Track A2: compute-matched, 6x14 | 0.963-1.000 | iter 2 of 6 |
+| Candidate 3, lambda=0.1, 6x14 | 0.950-1.000 | iter 5 of 6 |
+| Candidate 3, lambda=0.5, 6x14 | 0.925-1.000 | iter 4 of 6 |
+| Hypothesis-2 rollout eps=0.25, 6x14 | 0.963-1.000 | iter 5 of 6 |
+<!-- /CONSOLIDATED:saturation -->
+
+Every 2-D variant reaches full saturation by iteration 2-5 of a 6-12 iteration run and
+stays there; 1-D spent ten iterations oscillating in a 0.76-0.94 band before first
+reaching 1.000 at iteration 11 of 15. The rollout-exploration fix (hypothesis 4) did not
+change this pattern — it remains the one plausible mechanism nobody has yet found a
+working fix for, not a ruled-out explanation.
+
+### The scale question, left genuinely open
+
+Every 2-D training run in this investigation used at most 480 total self-play games (6
+iterations x 80 episodes); the 1-D run that worked used 1,200. Real AlphaZero used tens
+of millions; even the toy `alpha-zero-general` reference implementation this project is
+modeled on recommends defaults around 100,000 games for a simpler board game (Othello).
+"Matching 1-D's budget" was never a test of whether 2-D has *enough* self-play in any
+absolute sense — only whether the *ratio* to 1-D mattered. It doesn't rule out that this
+domain, or this network size, simply needs an order of magnitude more self-play than
+anything tried here. Not attempted in this investigation; flagged as the cheaper of the
+two open forks (the other being a domain redesign so Kawasaki's theorem is a live
+constraint rather than trivially satisfied on a rectangular grid).
+
+### What was deliberately not done
+
+No large-scale self-play run (held back per explicit direction — this session is
+CPU-only regardless, so the decision costs nothing here but stands for future sessions
+with GPU access). No domain redesign. No hypothesis 4 follow-up at a stronger epsilon or
+a different exploration mechanism. All three are legitimate next steps; none has been
+started.
