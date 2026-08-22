@@ -31,6 +31,18 @@ Wine, or some batch-mode build), and if so, its actual command-line syntax. This
 to be done on a machine that can actually run Windows binaries or Wine — this sandbox
 cannot.
 
+## Licence — a real blocker, not just an operational one
+
+Confirmed via the closest sources reachable from this sandbox (the primary site,
+origami.c.u-tokyo.ac.jp, is blocked by this session's network egress proxy):
+**non-commercial use only by default, and any commercial use requires individually
+emailing Tomohiro Tachi (tachi at idea.c.u-tokyo.ac.jp) for separate permission** —
+not a standardized paid tier like SF3D's, a case-by-case discretionary grant. Unlike
+Stage 1's licence, this cannot be resolved by engineering effort or a revenue
+threshold; it depends on the author's individual say-so. Get this answered *before*
+investing further integration work here, let alone before treating this pipeline as a
+commercial product.
+
 ## Dependencies
 
 ```

@@ -207,6 +207,44 @@ constraint rather than trivially satisfied on a rectangular grid).
 
 No large-scale self-play run (held back per explicit direction — this session is
 CPU-only regardless, so the decision costs nothing here but stands for future sessions
-with GPU access). No domain redesign. No hypothesis 4 follow-up at a stronger epsilon or
-a different exploration mechanism. All three are legitimate next steps; none has been
-started.
+with GPU access). No hypothesis 4 follow-up at a stronger epsilon or a different
+exploration mechanism. Both are legitimate next steps; neither has been started.
+
+### Domain redesign: scoped, not built — why it's bigger than it first looked
+
+The domain flaw is real: a rectangular grid's interior vertices are always four 90°
+sectors, so Kawasaki's alternating-sum condition is satisfied identically everywhere,
+for every instance, regardless of M/V assignment. It has never been a live constraint
+in any run in this investigation. Fixing that looked at first like a parameter change
+(vary the sector angles); it isn't, and it's worth recording precisely why, so this
+doesn't have to be re-derived.
+
+**A uniform skewed/rhombic grid cannot work.** At any 4-way line crossing, opposite
+angles are equal and adjacent ones sum to 180°, so Kawasaki's alternating sum reduces
+algebraically to exactly `4*theta - 360` for crossing angle `theta`. That is zero only
+at `theta = 90`, i.e. the existing trivial case — every other single skew angle is
+flat-*unfoldable* everywhere, not sometimes-foldable. A single global angle parameter
+cannot produce a family with some Kawasaki-passing and some Kawasaki-failing instances,
+which is what a useful generator needs.
+
+**Genuine per-vertex angle variation requires abandoning straight grid lines
+entirely.** `grid2d`'s row/column model works by keeping every vertical (or
+horizontal) crease as one straight line spanning the whole grid — that's what lets
+folds be expressed as simple integer row/column reflections instead of real geometry.
+Independent per-vertex sector angles break that straightness constraint: creases would
+need to bend at each vertex they pass through, which means real 2-D vector geometry
+(vertex coordinates, angles from vectors, a genuine segment-intersection crossing
+check) rather than the integer-coordinate trick this whole codebase has relied on so
+far.
+
+**That is a new geometry kernel, not an extension of the existing one** — comparable
+in scope to `grid2d` itself, not a small addition to it, and with real correctness
+risk: the standard literature on validating such constructions is on arXiv, which this
+session's network policy blocks outright, removing the usual way to cross-check the
+approach against established results before trusting it.
+
+**Decision:** given the revised scope, this was not started this session. Whoever
+picks it up next has the math above as a starting point, and should expect to build
+and validate a small rigid-flat-vertex geometry engine — ideally cross-checked against
+a known-correct simpler case the way `grid2d`'s row/column model was checked against
+`smoke_test`'s 1-D strip — before trusting any results built on top of it.

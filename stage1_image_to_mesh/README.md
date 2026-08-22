@@ -21,6 +21,15 @@ SF3D itself is implemented for real and covered by tests that run here:
 Run `python -m stage1_image_to_mesh.image_to_mesh <image>` on a machine with a GPU and
 the `sf3d` package installed to actually generate a mesh.
 
+## Licence
+
+Verified against the primary source
+([LICENSE.md](https://github.com/Stability-AI/stable-fast-3d/blob/main/LICENSE.md)):
+free for any use, including as part of a paid hosted product, up to **US $1M/year**
+revenue. Above that threshold, an enterprise licence from Stability AI is required —
+a standard commercial conversation, not a blocker. Not a risk to a "real platform"
+below that revenue.
+
 ## Dependencies
 
 ```
