@@ -54,6 +54,10 @@ def main() -> None:
                                              "checkpoints", "final.pt")
     )
     ap.add_argument("--out", default="grid2d/results.json")
+    # Config only; default reproduces the original four-shape sweep exactly.
+    ap.add_argument(
+        "--shapes", default=",".join(f"{m}x{n}" for m, n in EVAL_SHAPES)
+    )
     args = ap.parse_args()
 
     net = NetWrapper()
@@ -64,9 +68,13 @@ def main() -> None:
         print(f"WARNING: {args.checkpoint} missing; skipping the trained arm")
 
     arms = ["random", "mcts"] + (["mcts+net"] if have_net else [])
+    shapes = [
+        tuple(int(x) for x in tok.strip().lower().split("x"))
+        for tok in args.shapes.split(",")
+    ]
     started = time.time()
     rows = []
-    for m, n in EVAL_SHAPES:
+    for m, n in shapes:
         instances = make_set(m, n, args.count, seed=EVAL_SEED, family="derived")
         budget = budget_for(m, n, args.slack)
         for arm in arms:

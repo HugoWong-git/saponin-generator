@@ -1,0 +1,110 @@
+{
+  "rows": [
+    {
+      "m": 6,
+      "n": 6,
+      "shape": "6x6",
+      "unseen_shape": false,
+      "arm": "random",
+      "budget": 11,
+      "n_instances": 120,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_mean": 0.835,
+      "solve_rate_sd": 0.018559214542766714,
+      "solve_rate_per_seed": [
+        0.8,
+        0.8416666666666667,
+        0.85,
+        0.85,
+        0.8333333333333334
+      ],
+      "expansions_per_solve_mean": 10.008044117647058,
+      "expansions_per_solve_per_seed": [
+        10.010416666666666,
+        10.0,
+        10.009803921568627,
+        10.0,
+        10.02
+      ],
+      "wall_clock_s": 3.9218530654907227
+    },
+    {
+      "m": 6,
+      "n": 6,
+      "shape": "6x6",
+      "unseen_shape": false,
+      "arm": "mcts",
+      "budget": 11,
+      "n_instances": 120,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_mean": 0.9416666666666667,
+      "solve_rate_sd": 0.011785113019775782,
+      "solve_rate_per_seed": [
+        0.925,
+        0.9333333333333333,
+        0.9583333333333334,
+        0.95,
+        0.9416666666666667
+      ],
+      "expansions_per_solve_mean": 10.701364356043129,
+      "expansions_per_solve_per_seed": [
+        10.702702702702704,
+        10.6875,
+        10.643478260869566,
+        10.535087719298245,
+        10.938053097345133
+      ],
+      "wall_clock_s": 2.5641026496887207
+    },
+    {
+      "m": 6,
+      "n": 6,
+      "shape": "6x6",
+      "unseen_shape": false,
+      "arm": "mcts+net",
+      "budget": 11,
+      "n_instances": 120,
+      "seeds": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "solve_rate_mean": 0.9433333333333334,
+      "solve_rate_sd": 0.012247448713915874,
+      "solve_rate_per_seed": [
+        0.9333333333333333,
+        0.95,
+        0.95,
+        0.925,
+        0.9583333333333334
+      ],
+      "expansions_per_solve_mean": 10.149429007300862,
+      "expansions_per_solve_per_seed": [
+        10.178571428571429,
+        10.210526315789474,
+        10.175438596491228,
+        10.0,
+        10.182608695652174
+      ],
+      "wall_clock_s": 2.2173759937286377
+    }
+  ],
+  "eval_seed": 500003,
+  "slack": 1,
+  "count": 120,
+  "wall_clock_s": 9.9
+}

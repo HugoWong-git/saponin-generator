@@ -32,16 +32,25 @@ TRAIN_SEED = 900_001  # disjoint from the evaluation seed
 CURVE_SHAPES = [(8, 8), (6, 14)]
 
 
-def _write_curve(args: dict, history: list) -> None:
+def parse_shapes(spec: str) -> list[tuple[int, int]]:
+    """'6x6,8x8' -> [(6, 6), (8, 8)]."""
+    out = []
+    for token in spec.split(","):
+        m, n = token.strip().lower().split("x")
+        out.append((int(m), int(n)))
+    return out
+
+
+def _write_curve(args: dict, history: list, path: str = CURVE_PATH) -> None:
     """Atomically write the learning curve so far.
 
     Temp file plus rename: os.replace is atomic on POSIX, so a kill between the
     two never leaves a half-written learning_curve.json behind.
     """
-    tmp = CURVE_PATH + ".tmp"
+    tmp = path + ".tmp"
     with open(tmp, "w") as fh:
         json.dump({"args": args, "history": history}, fh, indent=2)
-    os.replace(tmp, CURVE_PATH)
+    os.replace(tmp, path)
 
 
 def budget_for(m: int, n: int, slack: int = 4) -> int:
@@ -78,10 +87,12 @@ def self_play_episode(game: GridGame, net: NetWrapper, sims: int, rng: random.Ra
         state = game.getNextState(state, 1, action)[0]
 
 
-def evaluate_curve_point(net: NetWrapper, per_shape: int, seed: int) -> dict:
+def evaluate_curve_point(
+    net: NetWrapper, per_shape: int, seed: int, shapes=None
+) -> dict:
     """Held-out solve rate for the learning curve. Small subsets, kept cheap."""
     out = {}
-    for m, n in CURVE_SHAPES:
+    for m, n in shapes or CURVE_SHAPES:
         test = make_set(m, n, per_shape, seed=seed, family="derived")
         solved = 0
         for i, (hmv, vmv) in enumerate(test):
@@ -102,14 +113,25 @@ def main() -> None:
     ap.add_argument("--curve-seed", type=int, default=777_001)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--window", type=int, default=4)
+    # Shape selection is config, not algorithm. Defaults reproduce the original run
+    # exactly, so an ablation can restrict shapes without changing anything else.
+    ap.add_argument("--train-shapes", default=",".join(f"{m}x{n}" for m, n in TRAIN_SHAPES))
+    ap.add_argument("--curve-shapes", default=",".join(f"{m}x{n}" for m, n in CURVE_SHAPES))
+    ap.add_argument("--curve-path", default=CURVE_PATH)
+    ap.add_argument("--checkpoint-dir", default=CHECKPOINT_DIR)
+    ap.add_argument("--tag", default="", help="suffix for checkpoint filenames")
     args = ap.parse_args()
 
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
     rng = random.Random(args.seed)
     net = NetWrapper()
 
+    train_shapes = parse_shapes(args.train_shapes)
+    curve_shapes = parse_shapes(args.curve_shapes)
+    os.makedirs(args.checkpoint_dir, exist_ok=True)
+
     pool = []
-    for m, n in TRAIN_SHAPES:
+    for m, n in train_shapes:
         pool += [(m, n, h, v) for h, v in make_set(m, n, args.pool, seed=TRAIN_SEED)]
     if not pool:
         raise SystemExit("training pool is empty")
@@ -120,7 +142,9 @@ def main() -> None:
             "iteration": 0,
             "loss": None,
             "self_play_solve_rate": None,
-            "held_out": evaluate_curve_point(net, args.curve_per_shape, args.curve_seed),
+            "held_out": evaluate_curve_point(
+                net, args.curve_per_shape, args.curve_seed, curve_shapes
+            ),
             "seconds": round(time.time() - started, 1),
         }
     ]
@@ -140,7 +164,9 @@ def main() -> None:
 
         flat = [e for batch in recent for e in batch]
         loss = net.train_on(flat)
-        held = evaluate_curve_point(net, args.curve_per_shape, args.curve_seed)
+        held = evaluate_curve_point(
+            net, args.curve_per_shape, args.curve_seed, curve_shapes
+        )
         history.append(
             {
                 "iteration": iteration,
@@ -150,13 +176,13 @@ def main() -> None:
                 "seconds": round(time.time() - started, 1),
             }
         )
-        net.save(os.path.join(CHECKPOINT_DIR, f"iter{iteration:02d}.pt"))
-        net.save(os.path.join(CHECKPOINT_DIR, "final.pt"))
+        net.save(os.path.join(args.checkpoint_dir, f"iter{iteration:02d}{args.tag}.pt"))
+        net.save(os.path.join(args.checkpoint_dir, f"final{args.tag}.pt"))
         # Write the curve every iteration, not just at the end: a crash or a
         # watchdog kill should cost at most the iteration in flight, never the
         # whole history. Written to a temp file and renamed so a kill mid-write
         # cannot leave truncated JSON on disk.
-        _write_curve(vars(args), history)
+        _write_curve(vars(args), history, args.curve_path)
         print(
             f"iter {iteration:2d}  loss {loss:.4f}  "
             f"self-play {solved / args.episodes:.3f}  held-out {held}  "
@@ -164,8 +190,8 @@ def main() -> None:
             flush=True,
         )
 
-    _write_curve(vars(args), history)
-    print(f"done in {time.time() - started:.0f}s -> {CURVE_PATH}")
+    _write_curve(vars(args), history, args.curve_path)
+    print(f"done in {time.time() - started:.0f}s -> {args.curve_path}")
 
 
 if __name__ == "__main__":
