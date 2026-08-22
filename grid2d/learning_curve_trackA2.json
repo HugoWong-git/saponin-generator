@@ -50,6 +50,15 @@
         "6x14": 0.8125
       },
       "seconds": 675.5
+    },
+    {
+      "iteration": 4,
+      "loss": 0.6362729668617249,
+      "self_play_solve_rate": 1.0,
+      "held_out": {
+        "6x14": 0.775
+      },
+      "seconds": 785.8
     }
   ]
 }
