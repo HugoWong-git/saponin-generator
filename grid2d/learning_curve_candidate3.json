@@ -1,0 +1,38 @@
+{
+  "args": {
+    "iterations": 6,
+    "episodes": 80,
+    "sims": 25,
+    "pool": 60,
+    "curve_per_shape": 80,
+    "curve_seed": 777001,
+    "seed": 7,
+    "window": 4,
+    "train_shapes": "6x14",
+    "curve_shapes": "6x14",
+    "curve_path": "grid2d/learning_curve_candidate3.json",
+    "checkpoint_dir": "grid2d/checkpoints",
+    "tag": "_candidate3",
+    "canon_lambda": 0.1
+  },
+  "history": [
+    {
+      "iteration": 0,
+      "loss": null,
+      "self_play_solve_rate": null,
+      "held_out": {
+        "6x14": 0.7125
+      },
+      "seconds": 39.1
+    },
+    {
+      "iteration": 1,
+      "loss": 3.177644729614258,
+      "self_play_solve_rate": 0.975,
+      "held_out": {
+        "6x14": 0.75
+      },
+      "seconds": 329.1
+    }
+  ]
+}
