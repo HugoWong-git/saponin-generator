@@ -1,0 +1,90 @@
+{
+  "input": "/home/user/saponin-generator/data/saponin_train_46k_valid.smi",
+  "parsing": {
+    "read": 45966,
+    "parsed": 45966,
+    "failed": 0
+  },
+  "split": {
+    "glycosides": 18654,
+    "aglycones": 27312,
+    "glycoside_pct": 40.58
+  },
+  "sugar_kinds": {
+    "hexopyranose-like": 27528,
+    "uronic-like": 4214,
+    "deoxyhexose-like": 11277,
+    "pentopyranose-like": 13545,
+    "furanose-like": 1842
+  },
+  "sugars_per_mol": {
+    "min": 0,
+    "p25": 0,
+    "median": 0,
+    "p75": 2,
+    "p95": 5,
+    "max": 12,
+    "mean": 1.27
+  },
+  "stereo": {
+    "fully_specified": 30202,
+    "partial": 11345,
+    "flat": 4419,
+    "defined_centres": {
+      "min": 0,
+      "p25": 8,
+      "median": 10,
+      "p75": 18,
+      "p95": 33,
+      "max": 67,
+      "mean": 13.16
+    },
+    "undefined_centres": {
+      "min": 0,
+      "p25": 0,
+      "median": 0,
+      "p75": 1,
+      "p95": 15,
+      "max": 67,
+      "mean": 2.44
+    }
+  },
+  "size": {
+    "heavy_atoms": {
+      "min": 6,
+      "p25": 34,
+      "median": 42,
+      "p75": 61,
+      "p95": 93,
+      "max": 185,
+      "mean": 50.05
+    },
+    "mol_weight": {
+      "min": 81.118,
+      "p25": 474.6380000000004,
+      "median": 586.8100000000003,
+      "p75": 868.2089999999997,
+      "p95": 1337.463,
+      "max": 2662.8709999999924,
+      "mean": 706.87
+    },
+    "smiles_len": {
+      "min": 8,
+      "p25": 98,
+      "median": 117,
+      "p75": 183,
+      "p95": 300,
+      "max": 623,
+      "mean": 147.96
+    },
+    "over_250_chars": 5440,
+    "over_100_chars": 32636
+  },
+  "diversity": {
+    "murcko_scaffolds": 7900,
+    "n_sampled": 3000,
+    "int_div": 0.8439,
+    "sediv": 0.637,
+    "sediv_threshold": 0.65
+  }
+}

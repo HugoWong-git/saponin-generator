@@ -1,0 +1,626 @@
+% Bibliography — Stage 1 Distribution-Learning Prior for Diverse Saponin Generation
+% Cycle 1, citation-verification pass applied (2026-09-22)
+%
+% Verification notes:
+%   - Entries carry a "note" field recording verification status where relevant.
+%   - carbcofolding2026 has NO author field: the author list could not be resolved
+%     this cycle (ACS 403; PMC/PubMed CAPTCHA; Crossref and Europe PMC rate-limited).
+%     No author name in this file is a guess. Re-resolve before using in a write-up.
+%   - madhawa2019: first two authors confirmed only; remainder unresolved.
+
+% ---------------------------------------------------------------------------
+% Chemical language models (SMILES / string representations)
+% ---------------------------------------------------------------------------
+
+@article{skinnider2021,
+  author  = {Skinnider, Michael A. and Stacey, R. Greg and Wishart, David S. and Foster, Leonard J.},
+  title   = {Chemical language models enable navigation in sparsely populated chemical space},
+  journal = {Nature Machine Intelligence},
+  volume  = {3},
+  number  = {9},
+  pages   = {759--770},
+  year    = {2021},
+  doi     = {10.1038/s42256-021-00368-1},
+  note    = {Full text read. Code: github.com/skinnider/low-data-generative-models; data: 10.5281/zenodo.4641960}
+}
+
+@article{skinnider2024,
+  author  = {Skinnider, Michael A.},
+  title   = {Invalid {SMILES} are beneficial rather than detrimental to chemical language models},
+  journal = {Nature Machine Intelligence},
+  volume  = {6},
+  number  = {4},
+  pages   = {437--448},
+  year    = {2024},
+  doi     = {10.1038/s42256-024-00821-x},
+  note    = {Open access}
+}
+
+@article{moret2020,
+  author  = {Moret, Michael and Friedrich, Lukas and Grisoni, Francesca and Merk, Daniel and Schneider, Gisbert},
+  title   = {Generative molecular design in low data regimes},
+  journal = {Nature Machine Intelligence},
+  volume  = {2},
+  number  = {3},
+  pages   = {171--180},
+  year    = {2020},
+  doi     = {10.1038/s42256-020-0160-y},
+  note    = {Code: github.com/ETHmodlab/virtual\_libraries}
+}
+
+@article{amabilino2020,
+  author  = {Amabilino, Silvia and Pog{\'a}ny, Peter and Pickett, Stephen D. and Green, Darren V. S.},
+  title   = {Guidelines for Recurrent Neural Network Transfer Learning-Based Molecular Generation of Focused Libraries},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {60},
+  number  = {12},
+  pages   = {5699--5713},
+  year    = {2020},
+  doi     = {10.1021/acs.jcim.0c00343},
+  pmid    = {32659085},
+  note    = {Source of the >=190 molecule transfer-learning floor. Paywalled; SI free}
+}
+
+@article{loeffler2024,
+  author  = {Loeffler, Hannes H. and He, Jiazhen and Tibo, Alessandro and Janet, Jon Paul and Voronov, Alexey and Mervin, Lewis H. and Engkvist, Ola},
+  title   = {{REINVENT} 4: Modern {AI}-driven generative molecule design},
+  journal = {Journal of Cheminformatics},
+  volume  = {16},
+  pages   = {20},
+  year    = {2024},
+  doi     = {10.1186/s13321-024-00812-5},
+  pmid    = {38383444},
+  note    = {Code: github.com/MolecularAI/REINVENT4, Apache 2.0}
+}
+
+@article{bagal2022,
+  author  = {Bagal, Viraj and Aggarwal, Rishal and Vinod, P. K. and Priyakumar, U. Deva},
+  title   = {{MolGPT}: Molecular Generation Using a Transformer-Decoder Model},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {62},
+  number  = {9},
+  pages   = {2064--2076},
+  year    = {2022},
+  doi     = {10.1021/acs.jcim.1c00600},
+  pmid    = {34694798}
+}
+
+@article{ozcelik2024,
+  author  = {{\"O}z{\c{c}}elik, R{\i}za and de Ruiter, Sarah and Criscuolo, Emanuele and Grisoni, Francesca},
+  title   = {Chemical language modeling with structured state space sequence models},
+  journal = {Nature Communications},
+  volume  = {15},
+  number  = {1},
+  pages   = {6176},
+  year    = {2024},
+  doi     = {10.1038/s41467-024-50469-9},
+  pmid    = {39039051},
+  note    = {Benchmarked on natural-product design tasks. Code: github.com/molML/s4-for-de-novo-drug-design}
+}
+
+@article{aruspous2019,
+  author  = {Ar{\'u}s-Pous, Josep and Johansson, Simon Viet and Prykhodko, Oleksii and Bjerrum, Esben Jannik and Tyrchan, Christian and Reymond, Jean-Louis and Chen, Hongming and Engkvist, Ola},
+  title   = {Randomized {SMILES} strings improve the quality of molecular generative models},
+  journal = {Journal of Cheminformatics},
+  volume  = {11},
+  pages   = {71},
+  year    = {2019},
+  doi     = {10.1186/s13321-019-0393-0},
+  note    = {Confirmed via reference list of skinnider2021}
+}
+
+@misc{bjerrum2017,
+  author       = {Bjerrum, Esben Jannik},
+  title        = {{SMILES} Enumeration as Data Augmentation for Neural Network Modeling of Molecules},
+  year         = {2017},
+  eprint       = {1703.07076},
+  archivePrefix= {arXiv},
+  note         = {Implementation: github.com/EBjerrum/SMILES-enumeration}
+}
+
+@article{aruspous2020,
+  author  = {Ar{\'u}s-Pous, Josep and Patronov, Atanas and Bjerrum, Esben Jannik and Tyrchan, Christian and Reymond, Jean-Louis and Chen, Hongming and Engkvist, Ola},
+  title   = {{SMILES}-based deep generative scaffold decorator for de-novo drug design},
+  journal = {Journal of Cheminformatics},
+  volume  = {12},
+  pages   = {38},
+  year    = {2020},
+  doi     = {10.1186/s13321-020-00441-8}
+}
+
+@article{krenn2020,
+  author  = {Krenn, Mario and H{\"a}se, Florian and Nigam, AkshatKumar and Friederich, Pascal and Aspuru-Guzik, Al{\'a}n},
+  title   = {Self-referencing embedded strings ({SELFIES}): A 100\% robust molecular string representation},
+  journal = {Machine Learning: Science and Technology},
+  volume  = {1},
+  number  = {4},
+  pages   = {045024},
+  year    = {2020},
+  doi     = {10.1088/2632-2153/aba947}
+}
+
+@article{weininger1988,
+  author  = {Weininger, David},
+  title   = {{SMILES}, a chemical language and information system. 1. Introduction to methodology and encoding rules},
+  journal = {Journal of Chemical Information and Computer Sciences},
+  volume  = {28},
+  number  = {1},
+  pages   = {31--36},
+  year    = {1988},
+  doi     = {10.1021/ci00057a005}
+}
+
+% ---------------------------------------------------------------------------
+% Natural-product-specific generative modelling
+% ---------------------------------------------------------------------------
+
+@article{sakano2024,
+  author  = {Sakano, Koh and Furui, Kairi and Ohue, Masahito},
+  title   = {{NPGPT}: Natural Product-Like Compound Generation with {GPT}-based Chemical Language Models},
+  journal = {The Journal of Supercomputing},
+  volume  = {81},
+  pages   = {352},
+  year    = {2025},
+  eprint  = {2411.12886},
+  archivePrefix = {arXiv},
+  note    = {Fine-tuned on COCONUT; SMILES model FCD 1.290 vs LSTM baseline 1.794. Code and checkpoints: github.com/ohuelab/npgpt, MIT licence}
+}
+
+@article{liu2025,
+  author  = {Liu, Chuan-Su and Yan, Bing-Chao and Sun, Han-Dong and Lu, Jin-Cai and Puno, Pema-Tenzin},
+  title   = {Bridging chemical space and biological efficacy: advances and challenges in applying generative models in structural modification of natural products},
+  journal = {Natural Products and Bioprospecting},
+  volume  = {15},
+  number  = {1},
+  pages   = {37},
+  year    = {2025},
+  doi     = {10.1007/s13659-025-00521-y},
+  pmid    = {40478370},
+  note    = {Full text read. States NP-specific generation strategies and evaluation systems are still needed}
+}
+
+@article{merk2018,
+  author  = {Merk, Daniel and Grisoni, Francesca and Friedrich, Lukas and Schneider, Gisbert},
+  title   = {Tuning artificial intelligence on the de novo design of natural-product-inspired retinoid {X} receptor modulators},
+  journal = {Communications Chemistry},
+  volume  = {1},
+  pages   = {68},
+  year    = {2018},
+  doi     = {10.1038/s42004-018-0068-1}
+}
+
+@article{zheng2019,
+  author  = {Zheng, Shuangjia and Yan, Xin and Gu, Qiong and Yang, Yuedong and Du, Yunfei and Lu, Yutong and Xu, Jun},
+  title   = {{QBMG}: quasi-biogenic molecule generator with deep recurrent neural network},
+  journal = {Journal of Cheminformatics},
+  volume  = {11},
+  pages   = {5},
+  year    = {2019},
+  doi     = {10.1186/s13321-019-0328-9},
+  note    = {Not yet read in full -- Cycle 2}
+}
+
+@article{pesciullesi2020,
+  author  = {Pesciullesi, Giorgio and Schwaller, Philippe and Laino, Teodoro and Reymond, Jean-Louis},
+  title   = {Transfer learning enables the molecular transformer to predict regio- and stereoselective reactions on carbohydrates},
+  journal = {Nature Communications},
+  volume  = {11},
+  number  = {1},
+  pages   = {4874},
+  year    = {2020},
+  doi     = {10.1038/s41467-020-18671-7},
+  note    = {Key counter-evidence: carbohydrate stereochemistry is learnable by a SMILES transformer given targeted fine-tuning}
+}
+
+% ---------------------------------------------------------------------------
+% Graph-based models (VAE, GAN, flow, autoregressive)
+% ---------------------------------------------------------------------------
+
+@inproceedings{jin2018,
+  author    = {Jin, Wengong and Barzilay, Regina and Jaakkola, Tommi},
+  title     = {Junction Tree Variational Autoencoder for Molecular Graph Generation},
+  booktitle = {Proceedings of the 35th International Conference on Machine Learning},
+  series    = {PMLR},
+  volume    = {80},
+  pages     = {2323--2332},
+  year      = {2018},
+  eprint    = {1802.04364},
+  archivePrefix = {arXiv},
+  note      = {Supplementary material describes post-hoc stereoisomer re-ranking. Code: github.com/wengong-jin/icml18-jtnn}
+}
+
+@article{ochiai2023,
+  author  = {Ochiai, Toshiki and Inukai, Tensei and Akiyama, Manato and Furui, Kairi and Ohue, Masahito and Matsumori, Nobuaki and Inuki, Shinsuke and Uesugi, Motonari and Sunazuka, Toshiaki and Kikuchi, Kazuya and Kakeya, Hideaki and Sakakibara, Yasubumi},
+  title   = {Variational autoencoder-based chemical latent space for large molecular structures with {3D} complexity},
+  journal = {Communications Chemistry},
+  volume  = {6},
+  number  = {1},
+  pages   = {249},
+  year    = {2023},
+  doi     = {10.1038/s42004-023-01054-6},
+  note    = {Author list confirmed via reference list of sakano2024. ABSTRACT-LEVEL ONLY -- top Cycle 2 read}
+}
+
+@inproceedings{decao2018,
+  author    = {De Cao, Nicola and Kipf, Thomas},
+  title     = {{MolGAN}: An implicit generative model for small molecular graphs},
+  booktitle = {ICML 2018 Deep Generative Models Workshop},
+  year      = {2018},
+  eprint    = {1805.11973},
+  archivePrefix = {arXiv},
+  note      = {Uniqueness approximately 2\% due to mode collapse; QM9 only}
+}
+
+@misc{madhawa2019,
+  author       = {Madhawa, Kaushalya and Ishiguro, Katushiko and others},
+  title        = {{GraphNVP}: An Invertible Flow Model for Generating Molecular Graphs},
+  year         = {2019},
+  eprint       = {1905.11600},
+  archivePrefix= {arXiv},
+  note         = {PARTIAL VERIFICATION: first two authors confirmed via Semantic Scholar record; remaining authors unresolved this cycle. Code: github.com/pfnet-research/graph-nvp}
+}
+
+@article{mercado2020,
+  author  = {Mercado, Roc{\'i}o and Rastemo, Tobias and Lindel{\"o}f, Edvard and Klambauer, G{\"u}nter and Engkvist, Ola and Chen, Hongming and Bjerrum, Esben Jannik},
+  title   = {Practical notes on building molecular graph generative models},
+  journal = {Applied AI Letters},
+  volume  = {1},
+  number  = {2},
+  pages   = {e18},
+  year    = {2020},
+  doi     = {10.1002/ail2.18},
+  note    = {Confirmed via reference list of skinnider2021. GraphINVENT repository availability unverified}
+}
+
+@article{subramanian2023,
+  author  = {Subramanian, Akshay and Greenman, Kevin P. and Gervaix, Alexis and Yang, Tzuhsiung and G{\'o}mez-Bombarelli, Rafael},
+  title   = {Automated patent extraction powers generative modeling in focused chemical spaces},
+  journal = {Digital Discovery},
+  volume  = {2},
+  pages   = {1006--1015},
+  year    = {2023},
+  eprint  = {2303.08272},
+  archivePrefix = {arXiv},
+  doi     = {10.1039/D3DD00041A},
+  note    = {arXiv record verified this cycle; journal venue not re-confirmed. RNN+SELFIES vs JT-VAE on small focused datasets}
+}
+
+% ---------------------------------------------------------------------------
+% Diffusion models
+% ---------------------------------------------------------------------------
+
+@inproceedings{vignac2023,
+  author    = {Vignac, Cl{\'e}ment and Krawczuk, Igor and Siraudin, Antoine and Wang, Bohan and Cevher, Volkan and Frossard, Pascal},
+  title     = {{DiGress}: Discrete Denoising Diffusion for Graph Generation},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2023},
+  eprint    = {2209.14734},
+  archivePrefix = {arXiv},
+  note      = {Full text read. Authors state SMILES appear to be the most efficient molecular representation. Code: github.com/cvignac/DiGress}
+}
+
+@inproceedings{hoogeboom2022,
+  author    = {Hoogeboom, Emiel and Satorras, V{\'i}ctor Garcia and Vignac, Cl{\'e}ment and Welling, Max},
+  title     = {Equivariant Diffusion for Molecule Generation in {3D}},
+  booktitle = {Proceedings of the 39th International Conference on Machine Learning},
+  series    = {PMLR},
+  volume    = {162},
+  pages     = {8867--8887},
+  year      = {2022},
+  eprint    = {2203.17003},
+  archivePrefix = {arXiv}
+}
+
+@inproceedings{xu2023,
+  author    = {Xu, Minkai and Powers, Alexander and Dror, Ron and Ermon, Stefano and Leskovec, Jure},
+  title     = {Geometric Latent Diffusion Models for {3D} Molecule Generation},
+  booktitle = {Proceedings of the 40th International Conference on Machine Learning},
+  series    = {PMLR},
+  volume    = {202},
+  year      = {2023},
+  eprint    = {2305.01140},
+  archivePrefix = {arXiv},
+  note      = {Author list verified this cycle}
+}
+
+@inproceedings{peng2023,
+  author    = {Peng, Xingang and Guan, Jiaqi and Liu, Qiang and Ma, Jianzhu},
+  title     = {{MolDiff}: Addressing the Atom-Bond Inconsistency Problem in {3D} Molecule Diffusion Generation},
+  booktitle = {Proceedings of the 40th International Conference on Machine Learning},
+  series    = {PMLR},
+  volume    = {202},
+  pages     = {27611--27629},
+  year      = {2023},
+  eprint    = {2305.07508},
+  archivePrefix = {arXiv},
+  note      = {Code: github.com/pengxingang/MolDiff}
+}
+
+% ---------------------------------------------------------------------------
+% Benchmarks, metrics, evaluation frameworks
+% ---------------------------------------------------------------------------
+
+@article{polykovskiy2020,
+  author  = {Polykovskiy, Daniil and Zhebrak, Alexander and Sanchez-Lengeling, Benjamin and Golovanov, Sergey and Tatanov, Oktai and Belyaev, Stanislav and Kurbanov, Rauf and Artamonov, Aleksey and Aladinskiy, Vladimir and Veselov, Mark and Kadurin, Artur and Johansson, Simon and Chen, Hongming and Nikolenko, Sergey and Aspuru-Guzik, Al{\'a}n and Zhavoronkov, Alex},
+  title   = {Molecular Sets ({MOSES}): A Benchmarking Platform for Molecular Generation Models},
+  journal = {Frontiers in Pharmacology},
+  volume  = {11},
+  pages   = {565644},
+  year    = {2020},
+  doi     = {10.3389/fphar.2020.565644},
+  pmid    = {33390943},
+  note    = {Dataset is 8--27 heavy atoms: excludes saponin-sized molecules. Metric code reusable; scores not transferable}
+}
+
+@article{brown2019,
+  author  = {Brown, Nathan and Fiscato, Marco and Segler, Marwin H. S. and Vaucher, Alain C.},
+  title   = {{GuacaMol}: Benchmarking Models for de Novo Molecular Design},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {59},
+  number  = {3},
+  pages   = {1096--1108},
+  year    = {2019},
+  doi     = {10.1021/acs.jcim.8b00839},
+  eprint  = {1811.09621},
+  archivePrefix = {arXiv},
+  note    = {Appendix (dataset construction) read. 2--88 heavy atoms; SMILES <= 100 chars}
+}
+
+@article{thomas2024,
+  author  = {Thomas, Morgan and O'Boyle, Noel M. and Bender, Andreas and de Graaf, Chris},
+  title   = {{MolScore}: a scoring, evaluation and benchmarking framework for generative models in de novo drug design},
+  journal = {Journal of Cheminformatics},
+  volume  = {16},
+  pages   = {64},
+  year    = {2024},
+  doi     = {10.1186/s13321-024-00861-w},
+  note    = {Source of SEDiv, outlier bits, scaffold/functional-group/ring-system diversity. Code: github.com/MorganCThomas/MolScore}
+}
+
+@article{renz2024,
+  author  = {Renz, Philipp and Luukkonen, Sohvi and Klambauer, G{\"u}nter},
+  title   = {Diverse Hits in De Novo Molecule Design: Diversity-Based Comparison of Goal-Directed Generators},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {64},
+  number  = {15},
+  pages   = {5756--5761},
+  year    = {2024},
+  doi     = {10.1021/acs.jcim.4c00519},
+  pmid    = {39029090},
+  note    = {Authorship verified this cycle; corrects the erroneous Koch2024 key used in the first report draft. Internal diversity misranks chemical-space coverage}
+}
+
+@article{preuer2018,
+  author  = {Preuer, Kristina and Renz, Philipp and Unterthiner, Thomas and Hochreiter, Sepp and Klambauer, G{\"u}nter},
+  title   = {Fr{\'e}chet {ChemNet} Distance: A Metric for Generative Models for Molecules in Drug Discovery},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {58},
+  number  = {9},
+  pages   = {1736--1741},
+  year    = {2018},
+  doi     = {10.1021/acs.jcim.8b00234}
+}
+
+@article{ertl2008,
+  author  = {Ertl, Peter and Roggo, Silvio and Schuffenhauer, Ansgar},
+  title   = {Natural Product-likeness Score and Its Application for Prioritization of Compound Libraries},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {48},
+  number  = {1},
+  pages   = {68--74},
+  year    = {2008},
+  doi     = {10.1021/ci700286x}
+}
+
+@article{ertl2009,
+  author  = {Ertl, Peter and Schuffenhauer, Ansgar},
+  title   = {Estimation of synthetic accessibility score of drug-like molecules based on molecular complexity and fragment contributions},
+  journal = {Journal of Cheminformatics},
+  volume  = {1},
+  pages   = {8},
+  year    = {2009},
+  doi     = {10.1186/1758-2946-1-8}
+}
+
+@article{bemis1996,
+  author  = {Bemis, Guy W. and Murcko, Mark A.},
+  title   = {The properties of known drugs. 1. Molecular frameworks},
+  journal = {Journal of Medicinal Chemistry},
+  volume  = {39},
+  number  = {15},
+  pages   = {2887--2893},
+  year    = {1996},
+  doi     = {10.1021/jm00015a007}
+}
+
+% ---------------------------------------------------------------------------
+% Databases
+% ---------------------------------------------------------------------------
+
+@article{chandrasekhar2025,
+  author  = {Chandrasekhar, Venkata and Rajan, Kohulan and Kanakam, Sri Ram Sagar and Sharma, Nisha and Wei{\ss}enborn, Viktor and Schaub, Jonas and Steinbeck, Christoph},
+  title   = {{COCONUT} 2.0: a comprehensive overhaul and curation of the collection of open natural products database},
+  journal = {Nucleic Acids Research},
+  volume  = {53},
+  number  = {D1},
+  pages   = {D634--D643},
+  year    = {2025},
+  doi     = {10.1093/nar/gkae1063},
+  pmid    = {39588778},
+  note    = {695,133 unique NP structures; 539,350 with preserved stereochemistry. Entries are FLAT structures with stereo forms attached separately}
+}
+
+@article{sorokina2021,
+  author  = {Sorokina, Maria and Merseburger, Peter and Rajan, Kohulan and Yirik, Mehmet Aziz and Steinbeck, Christoph},
+  title   = {{COCONUT} online: Collection of Open Natural Products database},
+  journal = {Journal of Cheminformatics},
+  volume  = {13},
+  number  = {1},
+  pages   = {2},
+  year    = {2021},
+  doi     = {10.1186/s13321-020-00478-9},
+  note    = {Superseded by chandrasekhar2025}
+}
+
+@article{zeng2020,
+  author  = {Zeng, Tao and Liu, Zhihong and Zhuang, Jingyuan and Jiang, Yitao and He, Wengan and Diao, Hongjuan and Lv, Nan and Jian, Yongxing and Liang, Danhong and Qiu, Yufan and Zhang, Rong and Zhang, Fan and Tang, Xiaowen and Wu, Ruibo},
+  title   = {{TeroKit}: A Database-Driven Web Server for Terpenome Research},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {60},
+  number  = {4},
+  pages   = {2082--2090},
+  year    = {2020},
+  doi     = {10.1021/acs.jcim.0c00141},
+  pmid    = {32286817},
+  note    = {Source of this project's ~40,000-molecule triterpenoid/saponin corpus. Server: terokit.qmclab.com}
+}
+
+@article{chen2023,
+  author  = {Chen, Ni and Zhang, Rong and Zeng, Tao and Zhang, Xin and Wu, Ruibo},
+  title   = {Developing {TeroENZ} and {TeroMAP} modules for the terpenome research platform {TeroKit}},
+  journal = {Database},
+  volume  = {2023},
+  pages   = {baad020},
+  year    = {2023},
+  doi     = {10.1093/database/baad020},
+  pmid    = {37207351},
+  note    = {Full text read. TeroMOL ~180,000 terpenome molecules (Dec 2022) incl. glycosides. Stereochemistry completeness of the bulk SMILES download NOT documented -- risk R12}
+}
+
+@article{ozcelik2025,
+  author  = {{\"O}z{\c{c}}elik, R{\i}za and Grisoni, Francesca},
+  title   = {How evaluation choices distort the outcome of generative drug discovery},
+  journal = {Journal of Cheminformatics},
+  volume  = {17},
+  pages   = {169},
+  year    = {2025},
+  doi     = {10.1186/s13321-025-01108-y},
+  note    = {Full text read. Library size biases evaluation and can reverse model rankings; uniqueness is a sanity check only; compare at identical library size; >=10^5 designs for similarity metrics. Distinct from ozcelik2024}
+}
+
+@article{tom2025,
+  author  = {Tom, Gary and Yu, Edwin and Yoshikawa, Naruki and Jorner, Kjell and Aspuru-Guzik, Al{\'a}n},
+  title   = {Stereochemistry-aware string-based molecular generation},
+  journal = {PNAS Nexus},
+  volume  = {4},
+  number  = {11},
+  pages   = {pgaf329},
+  year    = {2025},
+  doi     = {10.1093/pnasnexus/pgaf329},
+  pmid    = {41190212},
+  note    = {States current generative models ignore stereochemistry or postprocess it. Covers E/Z and R/S diastereomers and enantiomers but EXPLICITLY EXCLUDES axial chirality and ring isomers -- ring-fusion stereochemistry (protocol S16) has no precedent. ZINC15 drug-like subset. Code: github.com/aspuru-guzik-group/stereogeneration}
+}
+
+@article{thakkar2021,
+  author  = {Thakkar, Amol and Chadimov{\'a}, Veronika and Bjerrum, Esben Jannik and Engkvist, Ola and Reymond, Jean-Louis},
+  title   = {Retrosynthetic accessibility score ({RA}score) -- rapid machine learned synthesizability classification from {AI} driven retrosynthetic planning},
+  journal = {Chemical Science},
+  volume  = {12},
+  number  = {9},
+  pages   = {3339--3349},
+  year    = {2021},
+  doi     = {10.1039/D0SC05401A},
+  pmid    = {34164104},
+  note    = {>=4500x faster than the underlying CASP tool. Trained on drug-like retrosynthesis; applicability to natural products UNVERIFIED -- validate on real saponins before use}
+}
+
+@article{zheng2022,
+  author  = {Zheng, Shuangjia and Zeng, Tao and Li, Chengtao and Chen, Bin and Coley, Connor W. and Yang, Yuedong and Wu, Ruibo},
+  title   = {Deep learning driven biosynthetic pathways navigation for natural products with {BioNavi-NP}},
+  journal = {Nature Communications},
+  volume  = {13},
+  pages   = {3342},
+  year    = {2022},
+  doi     = {10.1038/s41467-022-30970-9},
+  note    = {Full text read. 90.2\% pathway success on 368 compounds; covers terpenoids via MVA/MEP. Shares authors (Zeng, Wu) and the qmclab.com domain with TeroKit -- same group as the project's training database. Code: github.com/prokia/BioNavi-NP}
+}
+
+@article{kim2021,
+  author  = {Kim, Hyun Woo and Wang, Mingxun and Leber, Christopher A. and Nothias, Louis-F{\'e}lix and Reher, Raphael and Kang, Kyo Bin and van der Hooft, Justin J. J. and Dorrestein, Pieter C. and Gerwick, William H. and Cottrell, Garrison W.},
+  title   = {{NPClassifier}: A Deep Neural Network-Based Structural Classification Tool for Natural Products},
+  journal = {Journal of Natural Products},
+  volume  = {84},
+  number  = {11},
+  pages   = {2795--2807},
+  year    = {2021},
+  doi     = {10.1021/acs.jnatprod.1c00399},
+  pmid    = {34662515},
+  note    = {Three-level pathway/superclass/class NP ontology plus an isglycoside flag. Code MIT, data/models/ontology CC0: github.com/mwang87/NP-Classifier. Per-level category counts and per-class F1 NOT verified this cycle (ACS 403, PMC CAPTCHA) -- validate on your own reference set before gating}
+}
+
+@article{djoumbou2016,
+  author  = {Djoumbou Feunang, Yannick and Eisner, Roman and Knox, Craig and Chepelev, Leonid and Hastings, Janna and Owen, Gareth and Fahy, Eoin and Steinbeck, Christoph and Subramanian, Shankar and Bolton, Evan and Greiner, Russell and Wishart, David S.},
+  title   = {{ClassyFire}: automated chemical classification with a comprehensive, computable taxonomy},
+  journal = {Journal of Cheminformatics},
+  volume  = {8},
+  pages   = {61},
+  year    = {2016},
+  doi     = {10.1186/s13321-016-0174-y},
+  note    = {ChemOnt: 4,825 categories (4,146 organic, 678 inorganic), up to 11 levels deep, average depth five. Secondary cross-check on kim2021}
+}
+
+@inproceedings{gao2022,
+  author    = {Gao, Wenhao and Fu, Tianfan and Sun, Jimeng and Coley, Connor W.},
+  title     = {Sample Efficiency Matters: A Benchmark for Practical Molecular Optimization},
+  booktitle = {Advances in Neural Information Processing Systems 36 (NeurIPS 2022), Datasets and Benchmarks Track},
+  year      = {2022},
+  note      = {Full text read. AUC top-10 vs oracle calls over 25 algorithms x 23 tasks; REINVENT ranked first for sample efficiency. Code: github.com/wenhao-gao/mol\_opt}
+}
+
+@article{guo2024,
+  author  = {Guo, Jeff and Schwaller, Philippe},
+  title   = {Augmented Memory: Sample-Efficient Generative Molecular Design with Reinforcement Learning},
+  journal = {JACS Au},
+  volume  = {4},
+  number  = {6},
+  pages   = {2160--2172},
+  year    = {2024},
+  doi     = {10.1021/jacsau.4c00066},
+  note    = {Full text read. KEY MECHANISM for the evaluation protocol: the prior-likelihood term sits inside the Stage 2 RL loss, so prior quality bounds Stage 2 output. Also documents RL mode collapse}
+}
+
+% ---------------------------------------------------------------------------
+% Glycan- and carbohydrate-specific
+% ---------------------------------------------------------------------------
+
+@article{sweetfold2026,
+  author  = {Sundar, Keshav and Yang, Hyunjun},
+  title   = {A Glycan-Aware Diffusion Model for Carbohydrate and Glycoprotein Structure Prediction},
+  journal = {bioRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.07.16.738959},
+  pmid    = {42523330},
+  note    = {Authorship and the context-dilution / sugar-collapse mechanism verified this cycle. STRUCTURE PREDICTION, not generative -- cited for its representational analysis only}
+}
+
+@article{carbcofolding2026,
+  title   = {Physical Implausibility of Carbohydrate Ligands in Results of Deep Learning-Based Cofolding Methods},
+  journal = {Journal of Chemical Information and Modeling},
+  volume  = {66},
+  number  = {7},
+  pages   = {3456},
+  year    = {2026},
+  pmid    = {41866819},
+  note    = {AUTHOR LIST UNRESOLVED this cycle (ACS 403; PMC/PubMed CAPTCHA; Crossref and Europe PMC rate-limited). No author field rather than a guessed one. Venue and identifiers confirmed; finding read from an indexed excerpt, not full text. RE-RESOLVE IN CYCLE 2}
+}
+
+% ---------------------------------------------------------------------------
+% Secondary / Cycle 2 reading list
+% ---------------------------------------------------------------------------
+
+@article{ozcelik2025,
+  author  = {{\"O}z{\c{c}}elik, R{\i}za and Brinkmann, Helena and Criscuolo, Emanuele and Grisoni, Francesca},
+  title   = {Generative Deep Learning for de Novo Drug Design -- A Chemical Space Odyssey},
+  journal = {Journal of Chemical Information and Modeling},
+  year    = {2025},
+  doi     = {10.1021/acs.jcim.5c00641},
+  note    = {Cycle 2 read}
+}
+
+@article{vantilborg2024,
+  author  = {van Tilborg, Derek and Brinkmann, Helena and Criscuolo, Emanuele and Rossen, Luke and {\"O}z{\c{c}}elik, R{\i}za and Grisoni, Francesca},
+  title   = {Deep learning for low-data drug discovery: Hurdles and opportunities},
+  journal = {Current Opinion in Structural Biology},
+  year    = {2024},
+  note    = {Directly on-topic for the low-data question. Cycle 2 read; volume/pages/DOI not yet resolved}
+}
